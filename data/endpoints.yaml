@@ -1,0 +1,35 @@
+---
+version: 1
+partitions:
+- partition: ks-cn
+  partitionName: KS China
+  dnsSuffix: api.ksyun.com
+  regionRegex: "^cn\\-\\w+\\-\\d+$"
+  defaults:
+    hostname: "{service}.{region}.{dnsSuffix}"
+    protocols:
+    - http
+    - https
+    signatureVersions:
+    - v4
+  regions:
+    cn-shanghai-2:
+      description: China ShangHai (PengBoShi)
+    cn-beijing-6:
+      description: China Beijing (WuQing)
+  services:
+    kog:
+      defaults:
+        protocols:
+        - http
+        - https
+        credentialScope:
+          "#": 服务名
+          service: kog
+      "# EndpointRegion": region
+      partitionEndpoint: cn-beijing-6
+      endpoints:
+        cn-beijing-6:
+          hostname: kog.cn-beijing-6.api.ksyun.com
+          credentialScope:
+            "# region": cn-shanghai-2

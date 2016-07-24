@@ -66,8 +66,8 @@ class AWSHTTPConnection(HTTPConnection):
 
     """
     def __init__(self, *args, **kwargs):
-        HTTPConnection.__init__(self, *args, **kwargs)
         print args, kwargs
+        HTTPConnection.__init__(self, *args, **kwargs)
         self._original_response_cls = self.response_class
         # We'd ideally hook into httplib's states, but they're all
         # __mangled_vars so we use our own state var.  This variable is set
@@ -120,6 +120,7 @@ class AWSHTTPConnection(HTTPConnection):
                 break
 
     def _send_request(self, method, url, body, headers):
+        print method, url, body, headers
         self._response_received = False
         if headers.get('Expect', b'') == b'100-continue':
             self._expect_header_set = True

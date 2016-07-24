@@ -18,6 +18,7 @@ import inspect
 import warnings
 import hashlib
 import logging
+import yaml
 
 from kscore.vendored import six
 from kscore.exceptions import MD5UnavailableError

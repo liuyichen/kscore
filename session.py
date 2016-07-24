@@ -81,7 +81,7 @@ class Session(object):
         'config_file': (None, 'AWS_CONFIG_FILE', '~/.aws/config', None),
         'ca_bundle': ('ca_bundle', 'AWS_CA_BUNDLE', None, None),
         'api_versions': ('api_versions', None, {}, None),
-
+        'dynamic_loader': ("dynamic_loader", "KS_DYNAMIC_LOADER", "YAML", None),
         # This is the shared credentials file amongst sdks.
         'credentials_file': (None, 'AWS_SHARED_CREDENTIALS_FILE',
                              '~/.aws/credentials', None),
@@ -171,9 +171,10 @@ class Session(object):
             lambda:  kscore.credentials.create_credential_resolver(self))
 
     def _register_data_loader(self):
+        dynamic_loader = self.get_config_variable('dynamic_loader')
         self._components.lazy_register_component(
             'data_loader',
-            lambda:  create_loader(self.get_config_variable('data_path')))
+            lambda:  create_loader(self.get_config_variable('data_path'), dynamic_loader))
 
     def _register_endpoint_resolver(self):
         def create_default_resolver():

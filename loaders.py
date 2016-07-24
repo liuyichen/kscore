@@ -97,6 +97,7 @@ import os
 
 from kscore import KSCORE_ROOT
 from kscore.compat import json
+from kscore.compat import yaml
 from kscore.compat import OrderedDict
 from kscore.exceptions import DataNotFoundError, UnknownServiceError
 
@@ -161,7 +162,47 @@ class JSONFileLoader(object):
             return json.loads(payload, object_pairs_hook=OrderedDict)
 
 
-def create_loader(search_path_string=None):
+class YAMLFileLoader(object):
+    """Loader YAML files.
+
+    This class can load the default format of models, which is a YAML file.
+
+    """
+    def exists(self, file_path):
+        """Checks if the file exists.
+
+        :type file_path: str
+        :param file_path: The full path to the file to load without
+            the '.json' extension.
+
+        :return: True if file path exists, False otherwise.
+
+        """
+        return os.path.isfile(file_path + '.yaml')
+
+    def load_file(self, file_path):
+        """Attempt to load the file path.
+
+        :type file_path: str
+        :param file_path: The full path to the file to load without
+            the '.json' extension.
+
+        :return: The loaded data if it exists, otherwise None.
+
+        """
+        full_path = file_path + '.yaml'
+        if not os.path.isfile(full_path):
+            return
+
+        # By default the file will be opened with locale encoding on Python 3.
+        # We specify "utf8" here to ensure the correct behavior.
+
+        with open(full_path, 'rb') as fp:
+            payload = fp.read().decode('utf-8')
+            return OrderedDict(yaml.load(payload))
+
+
+def create_loader(search_path_string=None, dynamic_loader=None):
     """Create a Loader class.
 
     This factory function creates a loader given a search string path.
@@ -175,14 +216,20 @@ def create_loader(search_path_string=None):
     :return: A ``Loader`` instance.
 
     """
+    if dynamic_loader.lower() == "yaml":
+        loader = YAMLFileLoader()
+    elif dynamic_loader.lower() == "json":
+        loader = JSONFileLoader()
+    else:
+        loader = None
     if search_path_string is None:
-        return Loader()
+        return Loader(file_loader=loader)
     paths = []
     extra_paths = search_path_string.split(os.pathsep)
     for path in extra_paths:
         path = os.path.expanduser(os.path.expandvars(path))
         paths.append(path)
-    return Loader(extra_search_paths=paths)
+    return Loader(extra_search_paths=paths, file_loader=loader)
 
 
 class Loader(object):
@@ -204,8 +251,10 @@ class Loader(object):
     def __init__(self, extra_search_paths=None, file_loader=None,
                  cache=None, include_default_search_paths=True):
         self._cache = {}
+        print "#", file_loader
         if file_loader is None:
             file_loader = self.FILE_LOADER_CLASS()
+        print file_loader
         self.file_loader = file_loader
         if extra_search_paths is not None:
             self._search_paths = extra_search_paths
