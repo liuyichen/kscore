@@ -191,6 +191,7 @@ class YAMLFileLoader(object):
 
         """
         full_path = file_path + '.yaml'
+        print full_path
         if not os.path.isfile(full_path):
             return
 

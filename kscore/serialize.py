@@ -304,7 +304,6 @@ class JSONSerializer(Serializer):
         if input_shape is not None:
             self._serialize(body, parameters, input_shape)
         serialized['body'] = json.dumps(body).encode(self.DEFAULT_ENCODING)
-        #serialized['body'] = {"Action": "GetProjectList", "Version": "2016-05-13"}
         return serialized
 
     def _serialize(self, serialized, value, shape, key=None):
@@ -358,12 +357,15 @@ class JSONSerializer(Serializer):
 
 
 class KSJSONSerializer(JSONSerializer):
+
     def serialize_to_request(self, parameters, operation_model):
         serialized = JSONSerializer.serialize_to_request(self, parameters, operation_model)
         query_params = self.MAP_TYPE()
         query_params['Action'] = operation_model.name
         query_params['Version'] = operation_model.metadata['apiVersion']
         serialized['query_string'] = query_params
+        headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+        serialized['headers'].update(headers)
         return serialized
 
 
