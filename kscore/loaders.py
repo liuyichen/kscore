@@ -191,7 +191,6 @@ class YAMLFileLoader(object):
 
         """
         full_path = file_path + '.yaml'
-        print full_path
         if not os.path.isfile(full_path):
             return
 
@@ -252,10 +251,8 @@ class Loader(object):
     def __init__(self, extra_search_paths=None, file_loader=None,
                  cache=None, include_default_search_paths=True):
         self._cache = {}
-        print "#", file_loader
         if file_loader is None:
             file_loader = self.FILE_LOADER_CLASS()
-        print file_loader
         self.file_loader = file_loader
         if extra_search_paths is not None:
             self._search_paths = extra_search_paths
