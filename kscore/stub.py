@@ -69,8 +69,8 @@ class Stubber(object):
         :param client: The client to add your stubs to.
         """
         self.client = client
-        self._event_id = 'boto_stubber'
-        self._expected_params_event_id = 'boto_stubber_expected_params'
+        self._event_id = 'ksc_stubber'
+        self._expected_params_event_id = 'ksc_stubber_expected_params'
         self._queue = deque()
 
     def activate(self):

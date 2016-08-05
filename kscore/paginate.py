@@ -73,8 +73,8 @@ class PageIterator(object):
         if not isinstance(value, dict):
             raise ValueError("Bad starting token: %s" % value)
 
-        if 'boto_truncate_amount' in value:
-            token_keys = sorted(self._input_token + ['boto_truncate_amount'])
+        if 'ksc_truncate_amount' in value:
+            token_keys = sorted(self._input_token + ['ksc_truncate_amount'])
         else:
             token_keys = sorted(self._input_token)
         dict_keys = sorted(value.keys())
@@ -261,7 +261,7 @@ class PageIterator(object):
         # However, even though we only kept 1, this is post
         # left truncation so the next starting index should be 2, not 1
         # (left_truncation + amount_to_keep).
-        next_token['boto_truncate_amount'] = \
+        next_token['ksc_truncate_amount'] = \
             amount_to_keep + starting_truncation
         self.resume_token = next_token
 
@@ -341,9 +341,9 @@ class PageIterator(object):
             next_token = json.loads(
                 base64.b64decode(next_token).decode('utf-8'))
             index = 0
-            if 'boto_truncate_amount' in next_token:
-                index = next_token.get('boto_truncate_amount')
-                del next_token['boto_truncate_amount']
+            if 'ksc_truncate_amount' in next_token:
+                index = next_token.get('ksc_truncate_amount')
+                del next_token['ksc_truncate_amount']
         except (ValueError, TypeError):
             next_token, index = self._parse_starting_token_deprecated()
         return next_token, index

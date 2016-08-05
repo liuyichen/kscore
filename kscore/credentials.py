@@ -69,7 +69,7 @@ def create_credential_resolver(session):
         # config file.
         ConfigProvider(config_filename=config_file, profile_name=profile_name),
         OriginalEC2Provider(),
-        BotoProvider(),
+        KSCoreProvider(),
         InstanceMetadataProvider(
             iam_role_fetcher=InstanceMetadataFetcher(
                 timeout=metadata_timeout,
@@ -585,7 +585,7 @@ class SharedCredentialProvider(CredentialProvider):
 
     ACCESS_KEY = 'aws_access_key_id'
     SECRET_KEY = 'aws_secret_access_key'
-    # Same deal as the EnvProvider above.  Botocore originally supported
+    # Same deal as the EnvProvider above.  KSCore originally supported
     # aws_security_token, but the SDKs are standardizing on aws_session_token
     # so we support both.
     TOKENS = ['aws_security_token', 'aws_session_token']
@@ -627,7 +627,7 @@ class ConfigProvider(CredentialProvider):
 
     ACCESS_KEY = 'aws_access_key_id'
     SECRET_KEY = 'aws_secret_access_key'
-    # Same deal as the EnvProvider above.  Botocore originally supported
+    # Same deal as the EnvProvider above.  KSCore originally supported
     # aws_security_token, but the SDKs are standardizing on aws_session_token
     # so we support both.
     TOKENS = ['aws_security_token', 'aws_session_token']
@@ -675,11 +675,11 @@ class ConfigProvider(CredentialProvider):
                 return profile_config[token_name]
 
 
-class BotoProvider(CredentialProvider):
-    METHOD = 'boto-config'
+class KSCoreProvider(CredentialProvider):
+    METHOD = 'ksc-config'
 
-    BOTO_CONFIG_ENV = 'BOTO_CONFIG'
-    DEFAULT_CONFIG_FILENAMES = ['/etc/boto.cfg', '~/.boto']
+    KSC_CONFIG_ENV = 'KSC_CONFIG'
+    DEFAULT_CONFIG_FILENAMES = ['/etc/kscore.cfg', '~/.kscore']
     ACCESS_KEY = 'aws_access_key_id'
     SECRET_KEY = 'aws_secret_access_key'
 
@@ -693,10 +693,10 @@ class BotoProvider(CredentialProvider):
 
     def load(self):
         """
-        Look for credentials in boto config file.
+        Look for credentials in ksc config file.
         """
-        if self.BOTO_CONFIG_ENV in self._environ:
-            potential_locations = [self._environ[self.BOTO_CONFIG_ENV]]
+        if self.KSC_CONFIG_ENV in self._environ:
+            potential_locations = [self._environ[self.KSC_CONFIG_ENV]]
         else:
             potential_locations = self.DEFAULT_CONFIG_FILENAMES
         for filename in potential_locations:
@@ -708,7 +708,7 @@ class BotoProvider(CredentialProvider):
             if 'Credentials' in config:
                 credentials = config['Credentials']
                 if self.ACCESS_KEY in credentials:
-                    logger.info("Found credentials in boto config file: %s",
+                    logger.info("Found credentials in ksc config file: %s",
                                 filename)
                     access_key, secret_key = self._extract_creds_from_mapping(
                         credentials, self.ACCESS_KEY, self.SECRET_KEY)

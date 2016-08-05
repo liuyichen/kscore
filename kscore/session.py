@@ -136,7 +136,7 @@ class Session(object):
             self._events = event_hooks
         if include_builtin_handlers:
             self._register_builtin_handlers(self._events)
-        self.user_agent_name = 'Botocore'
+        self.user_agent_name = 'KSCore'
         self.user_agent_version = __version__
         self.user_agent_extra = ''
         # The _profile attribute is just used to cache the value
@@ -450,7 +450,7 @@ class Session(object):
         Where:
 
          - agent_name is the value of the `user_agent_name` attribute
-           of the session object (`Boto` by default).
+           of the session object (`kscore` by default).
          - agent_version is the value of the `user_agent_version`
            attribute of the session object (the kscore version by default).
            by default.

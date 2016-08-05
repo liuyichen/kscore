@@ -18,7 +18,7 @@ from kscore.exceptions import InvalidS3AddressingStyleError
 
 
 class Config(object):
-    """Advanced configuration for Botocore clients.
+    """Advanced configuration for KSCore clients.
 
     :type region_name: str
     :param region_name: The region to use in instantiating the client

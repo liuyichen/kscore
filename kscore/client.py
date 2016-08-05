@@ -426,7 +426,7 @@ class ClientEndpointBridge(object):
             if 'v4' in potential_versions:
                 return 'v4'
             # Now just iterate over the signature versions in order until we
-            # find the first one that is known to Botocore.
+            # find the first one that is known to KSCore.
             for known in AUTH_TYPE_MAPS:
                 if known in potential_versions:
                     return known
