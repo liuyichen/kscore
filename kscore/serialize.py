@@ -364,8 +364,13 @@ class KSJSONSerializer(JSONSerializer):
         query_params['Action'] = operation_model.name
         query_params['Version'] = operation_model.metadata['apiVersion']
         serialized['query_string'] = query_params
-        headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+        headers = {'Content-Type': 'application/json', }
         serialized['headers'].update(headers)
+        body = {}
+        input_shape = operation_model.input_shape
+        if input_shape is not None:
+            self._serialize(body, parameters, input_shape)
+        serialized['body'] = json.dumps(body).encode(self.DEFAULT_ENCODING)
         return serialized
 
 
@@ -634,8 +639,7 @@ class RestXMLSerializer(BaseRestSerializer):
 SERIALIZERS = {
     'ec2': EC2Serializer,
     'query': QuerySerializer,
-    'json': JSONSerializer,
-    'ks-json': KSJSONSerializer,
+    'json': KSJSONSerializer,
     'rest-json': RestJSONSerializer,
     'rest-xml': RestXMLSerializer,
 }

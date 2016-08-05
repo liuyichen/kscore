@@ -42,7 +42,6 @@ partitions:
           "#": 服务名
           service: gametest
       "# EndpointRegion": region
-      partitionEndpoint: cn-beijing-test
+      partitionEndpoint: cn-beijing-6
       endpoints:
-        cn-beijing-test:
-          hostname: gametest.cn-beijing-test.api.ksyun.com
+        cn-beijing-6: {}
