@@ -7,7 +7,7 @@ metadata:
   serviceFullName: KS Project Service
   signatureVersion: v4
   targetPrefix: gametest
-  protocol: ks-json
+  protocol: json
 documentation: '<fullname>Amazon GameLift Service</fullname> <p>Welcome to the <i>Amazon
   GameLift API Reference</i>. Amazon GameLift is a managed Amazon Web Services (AWS)
   service for developers who need a scalable, server-based solution for multiplayer
@@ -46,11 +46,63 @@ documentation: '<fullname>Amazon GameLift Service</fullname> <p>Welcome to the <
   <li><a>PutScalingPolicy</a></li> <li><a>DescribeScalingPolicies</a></li> <li><a>DeleteScalingPolicy</a></li>
   </ul> </li> </ul>'
 operations:
+  AddProject:
+    name: AddProject
+    http:
+      method: POST
+      requestUri: /
+    input:
+      shape: Project
+    output:
+      shape: Project
+    errors:
+    - shape: MissingParameter
+      exception: true
+      documentation: "<p>The client failed authentication. Such requests should not
+        be retried without valid authentication credentials.</p>"
+  DeleteProject:
+    name: DeleteProject
+    http:
+      method: DELETE
+      requestUri: /
+    input:
+      shape: Id
+    errors:
+    - shape: MissingParameter
+      exception: true
+      documentation: "<p>The client failed authentication. Such requests should not
+        be retried without valid authentication credentials.</p>"
+  EditProject:
+    name: EditProject
+    http:
+      method: PUT
+      requestUri: /
+    input:
+      shape: Project
+    errors:
+    - shape: MissingParameter
+      exception: true
+      documentation: "<p>The client failed authentication. Such requests should not
+        be retried without valid authentication credentials.</p>"
+  GetProjectInfo:
+    name: GetProjectInfo
+    http:
+      method: GET
+      requestUri: /
+    input:
+      shape: Id
+    output:
+      shape: Project
+    errors:
+    - shape: MissingParameter
+      exception: true
+      documentation: "<p>The client failed authentication. Such requests should not
+        be retried without valid authentication credentials.</p>"
   GetProjectList:
     name: GetProjectList
     http:
       method: GET
-      requestUri: "/?aaa=1"
+      requestUri: "/"
     input:
       shape: Empty
       documentation: "<p>Represents the input for a request action.</p>"
@@ -94,6 +146,21 @@ operations:
       to another fleet ID, call <a>UpdateAlias</a>.</p>"
   '': {}
 shapes:
+  InstanceId:
+    type: string
+    min: 36
+    max: 36
+  Id:
+    type: structure
+    required:
+    - id
+    members:
+      id:
+        shape: InstanceId
+        documentation: "<p>123</p>"
+    exception: true
+    documentation: "<p>The client failed authentication. Such requests should not
+      be retried without valid authentication credentials.</p>"
   MissingParameter:
     type: structure
     members:
@@ -111,7 +178,12 @@ shapes:
     min: 1
   Project:
     type: structure
+    required:
+    - name
     members:
+      id:
+        shape: InstanceId
+        documentation: "<p>id</p>"
       comment:
         shape: NonEmptyString
         documentation: "<p>comment</p>"
@@ -122,3 +194,29 @@ shapes:
     type: list
     member:
       shape: Project
+  Roles:
+    type: list
+    member:
+      shape: Role
+  Role:
+    type: structure
+    members:
+      comment:
+        shape: NonEmptyString
+        documentation: "<p>comment</p>"
+      name:
+        shape: NonEmptyString
+        documentation: "<p>name</p>"
+  Groups:
+    type: list
+    member:
+      shape: Group
+  Group:
+    type: structure
+    members:
+      comment:
+        shape: NonEmptyString
+        documentation: "<p>comment</p>"
+      name:
+        shape: NonEmptyString
+        documentation: "<p>name</p>"
