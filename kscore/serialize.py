@@ -285,6 +285,16 @@ class EC2Serializer(QuerySerializer):
             self._serialize(serialized, element, element_shape, element_prefix)
 
 
+class ResJSONSerializer(QuerySerializer):
+
+    def serialize_to_request(self, parameters, operation_model):
+        serialized = QuerySerializer.serialize_to_request(self, parameters, operation_model)
+
+        serialized['headers'].update(Accept='application/json')
+
+        return serialized
+
+
 class JSONSerializer(Serializer):
     TIMESTAMP_FORMAT = 'unixtimestamp'
 
@@ -639,6 +649,7 @@ class RestXMLSerializer(BaseRestSerializer):
 SERIALIZERS = {
     'ec2': EC2Serializer,
     'query': QuerySerializer,
+    'query-json': ResJSONSerializer,
     'json': KSJSONSerializer,
     'rest-json': RestJSONSerializer,
     'rest-xml': RestXMLSerializer,

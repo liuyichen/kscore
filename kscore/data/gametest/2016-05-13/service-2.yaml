@@ -2,12 +2,14 @@
 version: '2.0'
 
 metadata:
+  # Version 接口版本
   apiVersion: '2016-05-13'
   endpointPrefix: gametest
   jsonVersion: '1.1'
-  serviceFullName: KS Project Service
+  serviceFullName: KSC Game Service
   signatureVersion: v4
   targetPrefix: gametest
+  # query/ec2/json/query-json/rest-json/rest-xml
   protocol: json
 
 documentation: ''
@@ -31,6 +33,8 @@ operations:
       requestUri: /
     input:
       shape: Id
+    output:
+      shape: *
 
   EditProject:
     name: EditProject
@@ -66,7 +70,7 @@ operations:
 shapes:
 
   InstanceId:
-    type: string
+    type: string #list/map/structure
     min: 36
     max: 36
 
