@@ -587,6 +587,12 @@ class JSONParser(BaseJSONParser):
         self._inject_response_metadata(parsed, response['headers'])
         return parsed
 
+    def _do_error_parse(self, response, shape):
+        body = self._parse_body_as_json(response['body'])
+        error = {"ResponseMetadata": {}, 'Error': body.get("Error", body.get("error", {}))}
+        error['ResponseMetadata'].update(RequestId=body.get("RequestId"))
+        return error
+
 
 class BaseRestParser(ResponseParser):
 

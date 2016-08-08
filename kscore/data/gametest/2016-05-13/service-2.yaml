@@ -19,10 +19,7 @@ operations:
       shape: Project
     output:
       shape: Project
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+
   DeleteProject:
     name: DeleteProject
     http:
@@ -30,10 +27,7 @@ operations:
       requestUri: /
     input:
       shape: Id
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+
   EditProject:
     name: EditProject
     http:
@@ -41,10 +35,7 @@ operations:
       requestUri: /
     input:
       shape: Project
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+
   GetProjectInfo:
     name: GetProjectInfo
     http:
@@ -54,44 +45,27 @@ operations:
       shape: Id
     output:
       shape: Project
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+
   GetProjectList:
     name: GetProjectList
     http:
       method: GET
-      requestUri: "/"
+      requestUri: /
     input:
       shape: Empty
       documentation: ""
     output:
       shape: Projects
       documentation: ""
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
-    - shape: InvalidRequestException
-      exception: true
-      documentation: ""
-    - shape: ConflictException
-      exception: true
-      documentation: ""
-    - shape: InternalServiceException
-      exception: true
-      fault: true
-      documentation: ""
-    - shape: LimitExceededException
-      exception: true
-      documentation: ""
+
     documentation: ""
 shapes:
   InstanceId:
     type: string
     min: 36
     max: 36
+  Message:
+    type: string
   Id:
     type: structure
     required:
@@ -100,13 +74,6 @@ shapes:
       id:
         shape: InstanceId
         documentation: ""
-    exception: true
-    documentation: ""
-  MissingParameter:
-    type: structure
-    members:
-      message:
-        shape: NonEmptyString
     exception: true
     documentation: ""
   Empty:
