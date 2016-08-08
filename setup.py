@@ -1,9 +1,17 @@
 #!/usr/bin/env python
+import codecs
 import kscore
 import sys
 
 from setuptools import setup, find_packages
 
+AUTHOR = "liuyichen"
+
+AUTHOR_EMAIL = "liuyc.mail@gmail.com"
+
+KEYWORDS = "ksc sdk"
+
+URL = "https://github.com/liuyichen/kscore"
 
 requires = ['jmespath>=0.7.1,<1.0.0',
             'python-dateutil>=2.1,<3.0.0',
@@ -29,8 +37,9 @@ setup(
     version=kscore.__version__,
     description='Low-level, data-driven core of ksc.',
     long_description=open('README.rst').read(),
-    author='KSC Web Services',
+    author=AUTHOR,
     url='https://github.com/liuyichen/kscore',
+    author_email=AUTHOR_EMAIL,
     scripts=[],
     packages=find_packages(exclude=['tests*']),
     package_data={'kscore': ['data/*.json', 'data/*/*.json'],
