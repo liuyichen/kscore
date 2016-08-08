@@ -1,5 +1,6 @@
 ---
 version: '2.0'
+
 metadata:
   apiVersion: '2016-05-13'
   endpointPrefix: gametest
@@ -8,8 +9,11 @@ metadata:
   signatureVersion: v4
   targetPrefix: gametest
   protocol: json
+
 documentation: ''
+
 operations:
+
   AddProject:
     name: AddProject
     http:
@@ -57,15 +61,18 @@ operations:
     output:
       shape: Projects
       documentation: ""
-
     documentation: ""
+
 shapes:
+
   InstanceId:
     type: string
     min: 36
     max: 36
+
   Message:
     type: string
+
   Id:
     type: structure
     required:
@@ -76,13 +83,16 @@ shapes:
         documentation: ""
     exception: true
     documentation: ""
+
   Empty:
     type: structure
     members: {}
     documentation: ""
+
   NonEmptyString:
     type: string
     min: 1
+
   Project:
     type: structure
     required:
@@ -97,14 +107,17 @@ shapes:
       name:
         shape: NonEmptyString
         documentation: ""
+
   Projects:
     type: list
     member:
       shape: Project
+
   Roles:
     type: list
     member:
       shape: Role
+
   Role:
     type: structure
     members:
@@ -114,10 +127,12 @@ shapes:
       name:
         shape: NonEmptyString
         documentation: ""
+
   Groups:
     type: list
     member:
       shape: Group
+
   Group:
     type: structure
     members:
