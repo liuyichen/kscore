@@ -7,7 +7,8 @@ from setuptools import setup, find_packages
 
 requires = ['jmespath>=0.7.1,<1.0.0',
             'python-dateutil>=2.1,<3.0.0',
-            'docutils>=0.10']
+            'docutils>=0.10',
+            'pyyaml==3.11']
 
 
 if sys.version_info[:2] == (2, 6):
@@ -40,7 +41,6 @@ setup(
         ':python_version=="2.6"': [
             'ordereddict==1.1',
             'simplejson==3.3.0',
-            'yaml==3.11',
         ]
     },
     license="Apache License 2.0",
