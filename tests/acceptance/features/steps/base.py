@@ -74,6 +74,7 @@ def api_call_with_json_and_error(context, operation):
 
 @then(u'I expect the response error code to be "{}"')
 def then_expected_error(context, code):
+
     assert_equal(context.error_response.response['Error']['Code'], code)
 
 

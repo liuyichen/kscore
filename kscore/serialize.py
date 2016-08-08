@@ -364,7 +364,7 @@ class KSJSONSerializer(JSONSerializer):
         query_params['Action'] = operation_model.name
         query_params['Version'] = operation_model.metadata['apiVersion']
         serialized['query_string'] = query_params
-        headers = {'Content-Type': 'application/json', }
+        headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
         serialized['headers'].update(headers)
         body = {}
         input_shape = operation_model.input_shape
