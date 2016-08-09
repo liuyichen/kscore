@@ -63,7 +63,7 @@ Data 更多服务配置
 ------------------
 
 + ENDPOINT 配置
-    + data\endpoints.yaml
+    + data\\endpoints.yaml
 
 ::
 
@@ -79,7 +79,7 @@ Data 更多服务配置
       ...
 
 + SERVICE 配置
-    + data\[service]\[version]\service-2.yaml
+    + data\\[service]\\[version]\\service-2.yaml
 
 ::
 
