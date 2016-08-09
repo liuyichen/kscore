@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
     client = s.create_client("kec", "cn-beijing-6", use_ssl=True)
 
-    print client.region_list()
+    print client.describe_instances()
 
 #    client.create_user(UserName="test22", RealName=u"刘一辰")
 
