@@ -10,7 +10,7 @@ Credentials 配置
 ----------------
 
 + 参考examples内示例
-  + 配置文件: ``.kscore.cfg``
+    + 配置文件: ``.kscore.cfg``
 
 ::
 
@@ -20,7 +20,7 @@ Credentials 配置
 
 
 + 或运行时配置
-  + session.set_credentials(access_key_id, secret_access_key, session_token=None)
+    + session.set_credentials(access_key_id, secret_access_key, session_token=None)
 
 ----------------
 Service 使用
@@ -63,7 +63,7 @@ Data 更多服务配置
 ------------------
 
 + ENDPOINT 配置
-  + data\endpoints.yaml
+    + data\endpoints.yaml
 
 ::
 
@@ -78,8 +78,8 @@ Data 更多服务配置
     - service:
       ...
 
-+
-  + data\[service]\[version]\service-2.yaml
++ SERVICE 配置
+    + data\[service]\[version]\service-2.yaml
 
 ::
 
