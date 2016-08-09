@@ -1,6 +1,6 @@
+========
 kscore
 ========
-
 
 A low-level interface to a growing number of KSC Web Services. Reference from botocore.
 
@@ -24,25 +24,72 @@ Service 使用
 ----------------
 
 + IAM
+::
 
- ::
-        from kscore.session import get_session
+    from kscore.session import get_session
 
-        if __name__ == "__main__":
-            s = get_session()
+    if __name__ == "__main__":
+        s = get_session()
 
-            client = s.create_client("iam", use_ssl=False)
+        client = s.create_client("iam", use_ssl=False)
 
-            users = client.list_users()
+        users = client.list_users()
 
 + KEC
+::
 
- ::
-        from kscore.session import get_session
+    from kscore.session import get_session
 
-        if __name__ == "__main__":
-            s = get_session()
+    if __name__ == "__main__":
+        s = get_session()
 
-            client = s.create_client("kec", "cn-beijing-6", use_ssl=False)
+        client = s.create_client("kec", "cn-beijing-6", use_ssl=False)
 
-            client.[your method]()
+        client.[your method]()
+
++ 更多
+::
+
+    欢迎补充
+
+----------------
+Data 更多服务配置
+----------------
+
++ ENDPOINT 配置
+  + data\endpoints.yaml
+::
+
+    version: n
+    partitions:
+    - partition:
+      ...
+      # REGION 列表
+      regions:
+        ...
+    # 服务列表
+    - service:
+      ...
+
++
+  + data\[service]\[version]\service-2.yaml
+::
+
+    version: n
+    # API 配置
+    metadata:
+      ...
+    # 操作方法
+    operations:
+      ...
+    # 请求及返回的结构体
+    shapes:
+      ...
++ 请参考IAM,KEC等配置
+
+----------------
+Contact Information
+----------------
+
+群   号: 367780788
+邮   箱: liuyc.mail@gmail.com
