@@ -1,15 +1,21 @@
 ---
 version: '2.0'
+
 metadata:
+  # Version 接口版本
   apiVersion: '2016-05-13'
   endpointPrefix: kog
   jsonVersion: '1.1'
   serviceFullName: KSC Game Service
   signatureVersion: v4
   targetPrefix: kog
-  protocol: json
+  # query/ec2/json/query-json/rest-json/rest-xml
+  protocol: query-json
+
 documentation: ''
+
 operations:
+
   AddProject:
     name: AddProject
     http:
@@ -19,21 +25,15 @@ operations:
       shape: Project
     output:
       shape: Project
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+
   DeleteProject:
     name: DeleteProject
     http:
       method: DELETE
       requestUri: /
     input:
-      shape: Id
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+      shape: InstanceId
+
   EditProject:
     name: EditProject
     http:
@@ -41,10 +41,9 @@ operations:
       requestUri: /
     input:
       shape: Project
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+    output:
+      shape: Project
+
   GetProjectInfo:
     name: GetProjectInfo
     http:
@@ -54,75 +53,56 @@ operations:
       shape: Id
     output:
       shape: Project
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
+
   GetProjectList:
     name: GetProjectList
     http:
       method: GET
-      requestUri: "/"
+      requestUri: /
     input:
       shape: Empty
       documentation: ""
     output:
       shape: Projects
       documentation: ""
-    errors:
-    - shape: MissingParameter
-      exception: true
-      documentation: ""
-    - shape: InvalidRequestException
-      exception: true
-      documentation: ""
-    - shape: ConflictException
-      exception: true
-      documentation: ""
-    - shape: InternalServiceException
-      exception: true
-      fault: true
-      documentation: ""
-    - shape: LimitExceededException
-      exception: true
-      documentation: ""
     documentation: ""
+
 shapes:
-  InstanceId:
+
+  Id:
     type: string
     min: 36
     max: 36
-  Id:
+
+  Message:
+    type: string
+
+  InstanceId:
     type: structure
     required:
     - id
     members:
       id:
-        shape: InstanceId
+        shape: Id
         documentation: ""
-    exception: true
     documentation: ""
-  MissingParameter:
-    type: structure
-    members:
-      message:
-        shape: NonEmptyString
-    exception: true
-    documentation: ""
+
   Empty:
     type: structure
     members: {}
     documentation: ""
+
   NonEmptyString:
     type: string
     min: 1
+
   Project:
     type: structure
     required:
     - name
     members:
       id:
-        shape: InstanceId
+        shape: Id
         documentation: ""
       comment:
         shape: NonEmptyString
@@ -130,33 +110,8 @@ shapes:
       name:
         shape: NonEmptyString
         documentation: ""
+
   Projects:
     type: list
     member:
       shape: Project
-  Roles:
-    type: list
-    member:
-      shape: Role
-  Role:
-    type: structure
-    members:
-      comment:
-        shape: NonEmptyString
-        documentation: ""
-      name:
-        shape: NonEmptyString
-        documentation: ""
-  Groups:
-    type: list
-    member:
-      shape: Group
-  Group:
-    type: structure
-    members:
-      comment:
-        shape: NonEmptyString
-        documentation: ""
-      name:
-        shape: NonEmptyString
-        documentation: ""

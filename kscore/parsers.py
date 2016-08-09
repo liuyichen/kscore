@@ -580,10 +580,11 @@ class JSONParser(BaseJSONParser):
         # The json.loads() gives us the primitive JSON types,
         # but we need to traverse the parsed JSON data to convert
         # to richer types (blobs, timestamps, etc.
-        parsed = {}
         if shape is not None:
             original_parsed = self._parse_body_as_json(response['body'])
             parsed = self._parse_shape(shape, original_parsed)
+        else:
+            parsed = self._parse_body_as_json(response['body'])
         self._inject_response_metadata(parsed, response['headers'])
         return parsed
 

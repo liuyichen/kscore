@@ -31,17 +31,15 @@ partitions:
 
     kog:
       defaults:
-        protocols:
-        - http
-        - https
         credentialScope:
-          # eg: [iam].cn-beijing-6.api.ksyun.com
           service: kog
-      # eg: iam.[cn-beijing-6].api.ksyun.com
+      EndpointRegion: cn-beijing-6
       partitionEndpoint: cn-beijing-6
       endpoints:
         cn-beijing-6:
-          hostname: kog.cn-beijing-6.api.ksyun.com
+          protocols:
+          - http
+          - https
 
     iam:
       defaults:
