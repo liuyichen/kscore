@@ -26,23 +26,23 @@ Service 使用
 + IAM
 
  ::
-    from kscore.session import get_session
+        from kscore.session import get_session
 
-    if __name__ == "__main__":
-        s = get_session()
+        if __name__ == "__main__":
+            s = get_session()
 
-        client = s.create_client("iam", use_ssl=False)
+            client = s.create_client("iam", use_ssl=False)
 
-        users = client.list_users()
+            users = client.list_users()
 
 + KEC
 
  ::
-    from kscore.session import get_session
+        from kscore.session import get_session
 
-    if __name__ == "__main__":
-        s = get_session()
+        if __name__ == "__main__":
+            s = get_session()
 
-        client = s.create_client("kec", "cn-beijing-6", use_ssl=False)
+            client = s.create_client("kec", "cn-beijing-6", use_ssl=False)
 
-        client.[your method]()
+            client.[your method]()
