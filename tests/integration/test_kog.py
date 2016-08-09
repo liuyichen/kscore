@@ -26,7 +26,7 @@ class TestGameTestService(unittest.TestCase):
         self.environ.pop('AWS_DATA_PATH', None)
 
         self.session = kscore.session.get_session()
-        self.client = self.session.create_client("gametest", "cn-beijing-6")
+        self.client = self.session.create_client("kog")
 
     def tearDown(self):
         self.patched.stop()

@@ -55,17 +55,18 @@ partitions:
         cn-beijing-6:
           hostname: iam.api.ksyun.com
 
-    gametest:
+    kec:
       defaults:
         credentialScope:
-          service: gametest
+          service: kec
       EndpointRegion: cn-beijing-6
-      partitionEndpoint: ksc-global
       endpoints:
-        ksc-global:
-          hostname: api.ksyun.com
+        cn-beijing-6:
           protocols:
           - http
           - https
-          credentialScope:
-            region: cn-beijing-6
+        cn-shanghai-2:
+          protocols:
+          - http
+          - https
+

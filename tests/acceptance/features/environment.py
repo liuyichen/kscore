@@ -17,7 +17,7 @@ REGION_OVERRIDES = {
 }
 
 SKIP_SERVICES = set([
-    'xxx',
+    'kec',
 ])
 
 
