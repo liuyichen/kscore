@@ -43,6 +43,20 @@ partitions:
         cn-beijing-6:
           hostname: kog.cn-beijing-6.api.ksyun.com
 
+    iam:
+      defaults:
+        protocols:
+        - http
+        - https
+        credentialScope:
+          # eg: [iam].cn-beijing-6.api.ksyun.com
+          service: iam
+      # eg: iam.[cn-beijing-6].api.ksyun.com
+      partitionEndpoint: cn-beijing-6
+      endpoints:
+        cn-beijing-6:
+          hostname: iam.api.ksyun.com
+
     gametest:
       defaults:
         credentialScope:

@@ -34,7 +34,7 @@ operations:
     input:
       shape: Id
     output:
-      shape: *
+      shape: "*"
 
   EditProject:
     name: EditProject
