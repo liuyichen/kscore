@@ -10,7 +10,7 @@ Credentials 配置
 ----------------
 
 + 参考examples内示例
-  + config file: ``.kscore.cfg``
+  + 配置文件: ``.kscore.cfg``
 
 ::
 
