@@ -11,7 +11,7 @@ metadata:
   signatureVersion: v4
   targetPrefix: iam
   # query/ec2/json/query-json/rest-json/rest-xml
-  protocol: query-json
+  protocol: json
 
 documentation: ''
 
