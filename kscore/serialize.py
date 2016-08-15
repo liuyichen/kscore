@@ -288,7 +288,22 @@ class EC2Serializer(QuerySerializer):
 class ResJSONSerializer(QuerySerializer):
 
     def serialize_to_request(self, parameters, operation_model):
-        serialized = QuerySerializer.serialize_to_request(self, parameters, operation_model)
+        shape = operation_model.input_shape
+        serialized = self._create_default_request()
+        serialized['method'] = operation_model.http.get('method',
+                                                        self.DEFAULT_METHOD)
+        # The query serializer only deals with body params so
+        # that's what we hand off the _serialize_* methods.
+        body_params = self.MAP_TYPE()
+        body_params['Action'] = operation_model.name
+        body_params['Version'] = operation_model.metadata['apiVersion']
+        if shape is not None:
+            self._serialize(body_params, parameters, shape)
+        if serialized['method'].lower() == "get":
+            serialized['body'] = {}
+            serialized['query_string'] = body_params
+        else:
+            serialized['body'] = body_params
 
         serialized['headers'].update(Accept='application/json')
 
