@@ -52,6 +52,21 @@ Service 使用
 
         client.[your method]()
 
++ MONITOR
+
+::
+
+    from kscore.session import get_session
+
+    if __name__ == "__main__":
+        s = get_session()
+
+        client = s.create_client("monitor", "cn-beijing-5", use_ssl=True)
+
+        m=client.get_metric_statistics(InstanceID="6f582c78-5d49-438e-bf2d-db4345daf503",Namespace="eip",MetricName="qos.bps_in",StartTime="2016-08-16T17:09:00Z",EndTime="2016-08-16T23:56:00Z",Period="600",Aggregate="Average")
+
+        print json.dumps(m,sort_keys=True,indent=4)
+
 + 更多
 
 ::
