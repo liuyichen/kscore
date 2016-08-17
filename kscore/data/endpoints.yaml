@@ -26,6 +26,9 @@ partitions:
 
     cn-beijing-6:
       description: China Beijing (WuQing)
+
+    cn-beijing-5:
+      description: China Beijing (ZaoJunMiao)
   # services
   services:
 
@@ -69,4 +72,23 @@ partitions:
           protocols:
           - http
           - https
+    monitor:
+      defaults:
+        credentialScope:
+          service: monitor
+      EndpointRegion: cn-beijing-6
+      endpoints:
+        cn-beijing-6:
+          protocols:
+          - http
+          - https
+        cn-shanghai-2:
+          protocols:
+          - http
+          - https
+        cn-beijing-5:
+          protocols:
+          - http
+          - https
+
 
