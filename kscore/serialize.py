@@ -299,6 +299,8 @@ class ResJSONSerializer(QuerySerializer):
         body_params['Version'] = operation_model.metadata['apiVersion']
         if shape is not None:
             self._serialize(body_params, parameters, shape)
+        else:
+            body_params.update(parameters)
         if serialized['method'].lower() == "get":
             serialized['body'] = {}
             serialized['query_string'] = body_params
