@@ -2,11 +2,11 @@
 version: '2.0'
 metadata:
   apiVersion: '2016-03-04'
-  endpointPrefix: eip
+  endpointPrefix: slb
   jsonVersion: '1.1'
-  serviceFullName: eip Service
+  serviceFullName: slb Service
   signatureVersion: v4
-  targetPrefix: eip
+  targetPrefix: slb
   protocol: query-json
 
 operations:
@@ -17,14 +17,23 @@ operations:
     input:
       shape: Empty
 
-  DescribeAddresses:
-    name: DescribeAddresses
+  DescribeListeners:
+    name: DescribeListeners
     http:
       method: GET
-  AssociateAddress:
-    name: AssociateAddress
+  RegisterInstancesWithListener:
+    name: RegisterInstancesWithListener
     http:
       method: GET
+  DescribeInstancesWithListener:
+    name: DescribeInstancesWithListener
+    http:
+      method: GET
+  DeregisterInstancesWithListener:
+    name: DeregisterInstancesWithListener
+    http:
+      method: GET
+
 
 shapes:
   Id:
@@ -34,7 +43,7 @@ shapes:
     type: bool
 
   Int:
-    type: long
+    type: int
 
   DataTime:
     type: timestamp
@@ -59,11 +68,3 @@ shapes:
       id:
         shape: Id
     documentation: ""
-
-  DescribeAddresses:
-    type: structure
-    members:
-      NextToken:
-        shape: NonEmptyString
-      MaxResults:
-        shape: Int

@@ -23,6 +23,10 @@ operations:
       method: GET
     input:
       shape: Empty
+  DescribeNetworkInterfaces:
+    name: DescribeNetworkInterfaces
+    http:
+      method: GET
 
 shapes:
   Id:
