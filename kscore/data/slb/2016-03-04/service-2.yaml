@@ -29,8 +29,8 @@ operations:
     name: DescribeInstancesWithListener
     http:
       method: GET
-  DeregisterInstancesWithListener:
-    name: DeregisterInstancesWithListener
+  DeregisterInstancesFromListener:
+    name: DeregisterInstancesFromListener
     http:
       method: GET
 
