@@ -21,9 +21,6 @@ operations:
     name: DescribeInstances
     http:
       method: GET
-    input:
-      shape: Empty
-
 shapes:
   Id:
     type: string #list/map/structure

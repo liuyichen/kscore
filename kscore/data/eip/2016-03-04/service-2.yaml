@@ -25,6 +25,10 @@ operations:
     name: AssociateAddress
     http:
       method: GET
+  DisassociateAddress:
+    name: DisassociateAddress
+    http:
+      method: GET
 
 shapes:
   Id:
