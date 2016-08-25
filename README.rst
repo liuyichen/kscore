@@ -6,12 +6,23 @@ A low-level interface to a growing number of KSC Web Services. Reference from bo
 `Documentation <http://www.ksyun.com/doc/search?word=API>`__
 
 ----------------
+安装
+----------------
+
++ pip 安装
+    + pip install kscore
++ github 安装
+    + 下载
+    + python setup.py install
+
+----------------
 Credentials 配置
 ----------------
 
 + 参考examples内示例
     + 配置文件: ``.kscore.cfg``
-
+    + 所在位置: '/etc/kscore.cfg' 或 './.kscore.cfg' 或 'C:\\kscore.cfg'
+    + 注意: 使用相对路径时，需与运行目录保持一致。
 ::
 
   [Credentials]
