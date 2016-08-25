@@ -31,7 +31,7 @@ from kscore.compat import OrderedDict
 logger = logging.getLogger(__name__)
 DEFAULT_METADATA_SERVICE_TIMEOUT = 1
 METADATA_SECURITY_CREDENTIALS_URL = (
-    'http://169.254.169.254/latest/meta-data/iam/security-credentials/'
+    'http://iam.api.ksyun.com/latest/meta-data/iam/security-credentials/'
 )
 # These are chars that do not need to be urlencoded.
 # Based on rfc2986, section 2.3

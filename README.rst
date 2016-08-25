@@ -12,7 +12,7 @@ A low-level interface to a growing number of KSC Web Services. Reference from bo
 + pip 安装
     + pip install kscore
 + github 安装
-    + 下载
+    + https://github.com/liuyichen/kscore 下载
     + python setup.py install
 
 ----------------
@@ -20,14 +20,17 @@ Credentials 配置
 ----------------
 
 + 参考examples内示例
+
     + 配置文件: ``.kscore.cfg``
+
     + 所在位置: '/etc/kscore.cfg' 或 './.kscore.cfg' 或 'C:\\kscore.cfg'
+
     + 注意: 使用相对路径时，需与运行目录保持一致。
 ::
 
   [Credentials]
-  aws_access_key_id=AKLTyW1V6ZWET7aIvdCeIH1cwQ
-  aws_secret_access_key=OEoTK4IgEBIq3rlFsbpcNDs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ==
+  ks_access_key_id=AKLTyW1V6ZWET7aIvdCeIH1cwQ
+  ks_secret_access_key=OEoTK4IgEBIq3rlFsbpcNDs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ==
 
 
 + 或运行时配置
@@ -87,7 +90,7 @@ Service 使用
 ------------------
 Data 更多服务配置
 ------------------
-
++ 参考 https://github.com/liuyichen/kscore/issues
 + ENDPOINT 配置
     + data\\endpoints.yaml
 
@@ -121,6 +124,18 @@ Data 更多服务配置
       ...
 
 + 请参考IAM,KEC等配置
+
+--------------------
+TESTS 测试
+--------------------
+
++ 基本接口测试
+
+\tests\acceptance> behave
+
++ 各服务测试用例
+
+\tests>nosetests --with-xunit --cover-erase --with-coverage --cover-package kscore --cover-xml -v integration
 
 --------------------
 Contact Information

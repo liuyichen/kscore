@@ -679,7 +679,7 @@ class KSCoreProvider(CredentialProvider):
     METHOD = 'ksc-config'
 
     KSC_CONFIG_ENV = 'KSC_CONFIG'
-    DEFAULT_CONFIG_FILENAMES = ['/etc/kscore.cfg', './.kscore.cfg']
+    DEFAULT_CONFIG_FILENAMES = ['/etc/kscore.cfg', './.kscore.cfg', 'C:\\kscore.cfg']
     ACCESS_KEY = 'ks_access_key_id'
     SECRET_KEY = 'ks_secret_access_key'
 
