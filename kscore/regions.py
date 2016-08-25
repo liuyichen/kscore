@@ -14,7 +14,7 @@
 
 This module implements endpoint resolution, including resolving endpoints for a
 given service and region and resolving the available endpoints for a service
-in a specific AWS partition.
+in a specific KSYUN partition.
 """
 import logging
 import re
@@ -60,11 +60,11 @@ class BaseEndpointResolver(object):
     def get_available_partitions(self):
         """Lists the partitions available to the endpoint resolver.
 
-        :return: Returns a list of partition names (e.g., ["aws", "aws-cn"]).
+        :return: Returns a list of partition names (e.g., ["ks", "ks-cn"]).
         """
         raise NotImplementedError
 
-    def get_available_endpoints(self, service_name, partition_name='aws',
+    def get_available_endpoints(self, service_name, partition_name='ks',
                                 allow_non_regional=False):
         """Lists the endpoint names of a particular partition.
 
@@ -73,8 +73,8 @@ class BaseEndpointResolver(object):
 
         :type partition_name: string
         :param partition_name: Name of the partition to limit endpoints to.
-            (e.g., aws for the public AWS endpoints, aws-cn for AWS China
-            endpoints, aws-us-gov for AWS GovCloud (US) Endpoints, etc.
+            (e.g., KSYUN for the public KSYUN endpoints, aws-cn for KSYUN China
+            endpoints, aws-us-gov for KSYUN GovCloud (US) Endpoints, etc.
 
         :type allow_non_regional: bool
         :param allow_non_regional: Set to True to include endpoints that are
@@ -101,7 +101,7 @@ class EndpointResolver(BaseEndpointResolver):
             result.append(partition['partition'])
         return result
 
-    def get_available_endpoints(self, service_name, partition_name='aws',
+    def get_available_endpoints(self, service_name, partition_name='ks',
                                 allow_non_regional=False):
         result = []
         for partition in self._endpoint_data['partitions']:

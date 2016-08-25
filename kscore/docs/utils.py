@@ -61,7 +61,7 @@ def py_default(type_name):
 
 
 def get_official_service_name(service_model):
-    """Generate the official name of an AWS Service
+    """Generate the official name of an KSYUN Service
 
     :param service_model: The service model representing the service
     """

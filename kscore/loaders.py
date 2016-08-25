@@ -246,7 +246,7 @@ class Loader(object):
     BUILTIN_DATA_PATH = os.path.join(KSCORE_ROOT, 'data')
     # For convenience we automatically add ~/.aws/models to the data path.
     CUSTOMER_DATA_PATH = os.path.join(os.path.expanduser('~'),
-                                      '.aws', 'models')
+                                      '.ks', 'models')
 
     def __init__(self, extra_search_paths=None, file_loader=None,
                  cache=None, include_default_search_paths=True):

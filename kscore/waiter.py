@@ -165,7 +165,7 @@ class AcceptorConfig(object):
 
     def _create_matcher_func(self):
         # An acceptor function is a callable that takes a single value.  The
-        # parsed AWS response.  Note that the parsed error response is also
+        # parsed KSYUN response.  Note that the parsed error response is also
         # provided in the case of errors, so it's entirely possible to
         # handle all the available matcher capabilities in the future.
         # There's only three supported matchers, so for now, this is all

@@ -355,7 +355,7 @@ class InvalidDNSNameError(KSCoreError):
         'Bucket named {bucket_name} is not DNS compatible. Virtual '
         'hosted-style addressing cannot be used. The addressing style '
         'can be configured by removing the addressing_style value '
-        'or setting that value to \'path\' or \'auto\' in the AWS Config '
+        'or setting that value to \'path\' or \'auto\' in the KSYUN Config '
         'file or in the kscore.client.Config object.'
     )
 

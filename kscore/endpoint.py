@@ -51,7 +51,7 @@ def convert_to_response_dict(http_response, operation_model):
     a dictionary.
 
     :type http_response: kscore.vendored.requests.model.Response
-    :param http_response: The HTTP response from an AWS service request.
+    :param http_response: The HTTP response from an KSYUN service request.
 
     :rtype: dict
     :return: A response dictionary which will contain the following keys:

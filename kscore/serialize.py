@@ -13,7 +13,7 @@
 """Protocol input serializes.
 
 This module contains classes that implement input serialization
-for the various AWS protocol types.
+for the various KSYUN protocol types.
 
 These classes essentially take user input, a model object that
 represents what the expected input should look like, and it returns

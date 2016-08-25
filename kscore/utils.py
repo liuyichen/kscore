@@ -72,7 +72,7 @@ def normalize_url_path(path):
 
 def remove_dot_segments(url):
     # RFC 3986, section 5.2.4 "Remove Dot Segments"
-    # Also, AWS services require consecutive slashes to be removed,
+    # Also, KSYUN services require consecutive slashes to be removed,
     # so that's done here as well
     if not url:
         return ''
@@ -263,7 +263,7 @@ def percent_encode_sequence(mapping, safe=SAFE_CHARS):
 
     * It uses quote, and not quote_plus
     * It has a default list of safe chars that don't need
-      to be encoded, which matches what AWS services expect.
+      to be encoded, which matches what KSYUN services expect.
 
     If any value in the input ``mapping`` is a list type,
     then each list element wil be serialized.  This is the equivalent

@@ -85,9 +85,9 @@ def create_credential_resolver(session):
         # concept to retrieve credentials.
         # The one edge case if is all three values are provided via
         # env vars:
-        # export AWS_ACCESS_KEY_ID=foo
-        # export AWS_SECRET_ACCESS_KEY=bar
-        # export AWS_PROFILE=baz
+        # export KS_ACCESS_KEY_ID=foo
+        # export KS_SECRET_ACCESS_KEY=bar
+        # export KS_PROFILE=baz
         # Then, just like our client() calls, the explicit credentials
         # will take precedence.
         #
@@ -486,11 +486,11 @@ class InstanceMetadataProvider(CredentialProvider):
 
 class EnvProvider(CredentialProvider):
     METHOD = 'env'
-    ACCESS_KEY = 'AWS_ACCESS_KEY_ID'
-    SECRET_KEY = 'AWS_SECRET_ACCESS_KEY'
+    ACCESS_KEY = 'KS_ACCESS_KEY_ID'
+    SECRET_KEY = 'KS_SECRET_ACCESS_KEY'
     # The token can come from either of these env var.
-    # AWS_SESSION_TOKEN is what other AWS SDKs have standardized on.
-    TOKENS = ['AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN']
+    # KS_SESSION_TOKEN is what other KS SDKs have standardized on.
+    TOKENS = ['KS_SECURITY_TOKEN', 'KS_SESSION_TOKEN']
 
     def __init__(self, environ=None, mapping=None):
         """
@@ -499,7 +499,7 @@ class EnvProvider(CredentialProvider):
             ``os.environ`` if no value is provided).
         :param mapping: An optional mapping of variable names to
             environment variable names.  Use this if you want to
-            change the mapping of access_key->AWS_ACCESS_KEY_ID, etc.
+            change the mapping of access_key->KS_ACCESS_KEY_ID, etc.
             The dict can have up to 3 keys: ``access_key``, ``secret_key``,
             ``session_token``.
         """
@@ -551,9 +551,9 @@ class EnvProvider(CredentialProvider):
 class OriginalEC2Provider(CredentialProvider):
     METHOD = 'ec2-credentials-file'
 
-    CRED_FILE_ENV = 'AWS_CREDENTIAL_FILE'
-    ACCESS_KEY = 'AWSAccessKeyId'
-    SECRET_KEY = 'AWSSecretKey'
+    CRED_FILE_ENV = 'KS_CREDENTIAL_FILE'
+    ACCESS_KEY = 'KSAccessKeyId'
+    SECRET_KEY = 'KSSecretKey'
 
     def __init__(self, environ=None, parser=None):
         if environ is None:
@@ -567,11 +567,11 @@ class OriginalEC2Provider(CredentialProvider):
         """
         Search for a credential file used by original EC2 CLI tools.
         """
-        if 'AWS_CREDENTIAL_FILE' in self._environ:
-            full_path = os.path.expanduser(self._environ['AWS_CREDENTIAL_FILE'])
+        if 'KS_CREDENTIAL_FILE' in self._environ:
+            full_path = os.path.expanduser(self._environ['KS_CREDENTIAL_FILE'])
             creds = self._parser(full_path)
             if self.ACCESS_KEY in creds:
-                logger.info('Found credentials in AWS_CREDENTIAL_FILE.')
+                logger.info('Found credentials in KS_CREDENTIAL_FILE.')
                 access_key = creds[self.ACCESS_KEY]
                 secret_key = creds[self.SECRET_KEY]
                 # EC2 creds file doesn't support session tokens.
@@ -916,7 +916,7 @@ class AssumeRoleProvider(CredentialProvider):
         if config['role_session_name'] is not None:
             assume_role_kwargs['RoleSessionName'] = config['role_session_name']
         else:
-            role_session_name = 'AWS-CLI-session-%s' % (int(time.time()))
+            role_session_name = 'KS-CLI-session-%s' % (int(time.time()))
             assume_role_kwargs['RoleSessionName'] = role_session_name
         return assume_role_kwargs
 

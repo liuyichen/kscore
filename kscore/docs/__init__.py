@@ -18,7 +18,7 @@ from kscore.docs.service import ServiceDocumenter
 def generate_docs(root_dir, session):
     """Generates the reference documentation for kscore
 
-    This will go through every available AWS service and output ReSTructured
+    This will go through every available KSYUN service and output ReSTructured
     text files documenting each service.
 
     :param root_dir: The directory to write the reference files to. Each

@@ -78,7 +78,7 @@ class Session(object):
         'profile': (None, ['AWS_DEFAULT_PROFILE', 'AWS_PROFILE'], None, None),
         'region': ('region', 'AWS_DEFAULT_REGION', None, None),
         'data_path': ('data_path', 'AWS_DATA_PATH', None, None),
-        'config_file': (None, 'AWS_CONFIG_FILE', '~/.aws/config', None),
+        'config_file': (None, 'AWS_CONFIG_FILE', '~/.ks/config', None),
         'ca_bundle': ('ca_bundle', 'AWS_CA_BUNDLE', None, None),
         'api_versions': ('api_versions', None, {}, None),
         'dynamic_loader': ("dynamic_loader", "KS_DYNAMIC_LOADER", "YAML", None),
@@ -835,8 +835,8 @@ class Session(object):
 
         :type partition_name: string
         :param partition_name: Name of the partition to limit endpoints to.
-            (e.g., aws for the public AWS endpoints, aws-cn for AWS China
-            endpoints, aws-us-gov for AWS GovCloud (US) Endpoints, etc.
+            (e.g., KSYUN for the public KSYUN endpoints, aws-cn for KSYUN China
+            endpoints, aws-us-gov for KSYUN GovCloud (US) Endpoints, etc.
 
         :type allow_non_regional: bool
         :param allow_non_regional: Set to True to include endpoints that are
