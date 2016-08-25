@@ -1,10 +1,10 @@
-# Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -18,7 +18,7 @@ import base64
 import kscore
 import kscore.auth
 from kscore.compat import six, OrderedDict
-from kscore.awsrequest import create_request_object, prepare_request_dict
+from kscore.ksrequest import create_request_object, prepare_request_dict
 from kscore.exceptions import UnknownSignatureVersionError
 from kscore.exceptions import UnknownClientMethodError
 from kscore.exceptions import UnsupportedSignatureVersionError
@@ -95,7 +95,7 @@ class RequestSigner(object):
         :type operation_name: string
         :param operation_name: The name of the current operation, e.g.
                                ``ListBuckets``.
-        :type request: AWSRequest
+        :type request: KSRequest
         :param request: The request object to be sent over the wire.
         """
         signature_version = self._signature_version
@@ -175,7 +175,7 @@ class RequestSigner(object):
 
         :type request_dict: dict
         :param request_dict: The prepared request dictionary returned by
-            ``kscore.awsrequest.prepare_request_dict()``
+            ``kscore.ksrequest.prepare_request_dict()``
 
         :type expires_in: int
         :param expires_in: The number of seconds the presigned url is valid
@@ -316,12 +316,10 @@ class CloudFrontSigner(object):
         # Note:
         # 1. Order in canned policy is significant. Special care has been taken
         #    to ensure the output will match the order defined by the document.
-        #    There is also a test case to ensure that order.
-        #    SEE: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-creating-signed-url-canned-policy.html#private-content-canned-policy-creating-policy-statement
+        #    There is also a test case to ensure that order. https://github.com/liuyichen/
         # 2. Albeit the order in custom policy is not required by CloudFront,
         #    we still use OrderedDict internally to ensure the result is stable
-        #    and also matches canned policy requirement.
-        #    SEE: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-creating-signed-url-custom-policy.html
+        #    and also matches canned policy requirement. https://github.com/liuyichen/
         moment = int(datetime2timestamp(date_less_than))
         condition = OrderedDict({"DateLessThan": {"AWS:EpochTime": moment}})
         if ip_address:
@@ -336,8 +334,7 @@ class CloudFrontSigner(object):
         return json.dumps(custom_policy, separators=(',', ':'))
 
     def _url_b64encode(self, data):
-        # Required by CloudFront. See also:
-        # http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-linux-openssl.html
+        # Required by CloudFront. See also: https://github.com/liuyichen/
         return base64.b64encode(
             data).replace(b'+', b'-').replace(b'=', b'_').replace(b'/', b'~')
 
@@ -353,7 +350,7 @@ class S3PostPresigner(object):
 
         :type request_dict: dict
         :param request_dict: The prepared request dictionary returned by
-            ``kscore.awsrequest.prepare_request_dict()``
+            ``kscore.ksrequest.prepare_request_dict()``
 
         :type fields: dict
         :param fields: A dictionary of prefilled form fields to build on top
@@ -381,7 +378,7 @@ class S3PostPresigner(object):
             the form fields and respective values to use when submitting the
             post. For example:
 
-            {'url': 'https://mybucket.s3.amazonaws.com
+            {'url': 'https://github.com/liuyichen/',
              'fields': {'acl': 'public-read',
                         'key': 'mykey',
                         'signature': 'mysignature',
@@ -560,7 +557,7 @@ def generate_presigned_post(self, Bucket, Key, Fields=None, Conditions=None,
         the form fields and respective values to use when submitting the
         post. For example:
 
-        {'url': 'https://mybucket.s3.amazonaws.com
+        {'url': 'https://github.com/liuyichen/',
          'fields': {'acl': 'public-read',
                     'key': 'mykey',
                     'signature': 'mysignature',

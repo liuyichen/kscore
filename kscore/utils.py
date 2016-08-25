@@ -1,10 +1,10 @@
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -41,7 +41,7 @@ RESTRICTED_REGIONS = [
     'us-gov-west-1',
     'fips-us-gov-west-1',
 ]
-S3_ACCELERATE_ENDPOINT = 's3-accelerate.amazonaws.com'
+S3_ACCELERATE_ENDPOINT = 's3.ksyun.com'
 
 
 class _RetriesExceededError(Exception):
@@ -58,7 +58,7 @@ def get_service_module_name(service_model):
         'serviceAbbreviation',
         service_model.metadata.get(
             'serviceFullName', service_model.service_name))
-    name = name.replace('Amazon', '')
+
     name = name.replace('AWS', '')
     name = re.sub('\W+', '', name)
     return name
@@ -429,7 +429,7 @@ def calculate_tree_hash(body):
 
     For more information see:
 
-    http://docs.aws.amazon.com/amazonglacier/latest/dev/checksum-calculations.html
+    https://github.com/liuyichen/
 
     :param body: Any file like object.  This has the same constraints as
         the ``body`` param in calculate_sha256
@@ -647,7 +647,7 @@ def fix_s3_host(request, signature_version, region_name, **kwargs):
         return
     try:
         switch_to_virtual_host_style(
-            request, signature_version, 's3.amazonaws.com')
+            request, signature_version, 's3.ksyun.com')
     except InvalidDNSNameError as e:
         bucket_name = e.kwargs['bucket_name']
         logger.debug('Not changing URI, bucket is not DNS compatible: %s',
@@ -661,7 +661,7 @@ def switch_to_virtual_host_style(request, signature_version,
     the signature version (which is taken in consideration for the default
     case). If the bucket is not DNS compatible an InvalidDNSName is thrown.
 
-    :param request: A AWSRequest object that is about to be sent.
+    :param request: A KSRequest object that is about to be sent.
     :param signature_version: The signature version to sign with
     :param default_endpoint_url: The endpoint to use when switching to a
         virtual style. If None is supplied, the virtual host will be

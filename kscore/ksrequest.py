@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 Mitch Garnaat http://garnaat.org/
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -263,7 +263,7 @@ for name, function in AWSHTTPConnection.__dict__.items():
 def prepare_request_dict(request_dict, endpoint_url, user_agent=None):
     """
     This method prepares a request dict to be created into an
-    AWSRequestObject. This prepares the request dict by adding the
+    KSRequestObject. This prepares the request dict by adding the
     url and the user agent to the request dict.
 
     :type request_dict: dict
@@ -293,19 +293,19 @@ def prepare_request_dict(request_dict, endpoint_url, user_agent=None):
 
 def create_request_object(request_dict):
     """
-    This method takes a request dict and creates an AWSRequest object
+    This method takes a request dict and creates an KSRequest object
     from it.
 
     :type request_dict: dict
     :param request_dict:  The request dict (created from the
         ``prepare_request_dict`` method).
 
-    :rtype: ``kscore.awsrequest.AWSRequest``
-    :return: An AWSRequest object based on the request_dict.
+    :rtype: ``kscore.ksrequest.KSRequest``
+    :return: An KSRequest object based on the request_dict.
 
     """
     r = request_dict
-    return AWSRequest(method=r['method'], url=r['url'],
+    return KSRequest(method=r['method'], url=r['url'],
                       data=r['body'],
                       headers=r['headers'])
 
@@ -332,7 +332,7 @@ def _urljoin(endpoint_url, url_path):
     return reconstructed
 
 
-class AWSRequest(models.RequestEncodingMixin, models.Request):
+class KSRequest(models.RequestEncodingMixin, models.Request):
     def __init__(self, *args, **kwargs):
         self.auth_path = None
         if 'auth_path' in kwargs:

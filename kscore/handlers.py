@@ -1,10 +1,10 @@
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -57,21 +57,6 @@ VERSION_ID_SUFFIX = re.compile(r'\?versionId=[^\s]+$')
 
 
 def check_for_200_error(response, **kwargs):
-    # From: http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectCOPY.html
-    # There are two opportunities for a copy request to return an error. One
-    # can occur when Amazon S3 receives the copy request and the other can
-    # occur while Amazon S3 is copying the files. If the error occurs before
-    # the copy operation starts, you receive a standard Amazon S3 error. If the
-    # error occurs during the copy operation, the error response is embedded in
-    # the 200 OK response. This means that a 200 OK response can contain either
-    # a success or an error. Make sure to design your application to parse the
-    # contents of the response and handle it appropriately.
-    #
-    # So this handler checks for this case.  Even though the server sends a
-    # 200 response, conceptually this should be handled exactly like a
-    # 500 response (with respect to raising exceptions, retries, etc.)
-    # We're connected *before* all the other retry logic handlers, so as long
-    # as we switch the error code to 500, we'll retry the error as expected.
     if response is None:
         # A None response can happen if an exception is raised while
         # trying to retrieve the response.  See Endpoint._get_response().
@@ -452,14 +437,7 @@ def document_base64_encoding(param):
 
 
 def validate_ascii_metadata(params, **kwargs):
-    """Verify S3 Metadata only contains ascii characters.
-
-    From: http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html
-
-    "Amazon S3 stores user-defined metadata in lowercase. Each name, value pair
-    must conform to US-ASCII when using REST and UTF-8 when using SOAP or
-    browser-based uploads via POST."
-
+    """
     """
     metadata = params.get('Metadata')
     if not metadata or not isinstance(metadata, dict):
@@ -561,10 +539,6 @@ def document_glacier_tree_hash_checksum():
     doc = '''
         This is a required field.
 
-        Ideally you will want to compute this value with checksums from
-        previous uploaded parts, using the algorithm described in
-        `Glacier documentation <http://docs.aws.amazon.com/amazonglacier/latest/dev/checksum-calculations.html>`_.
-
         But if you prefer, you can also use kscore.util.calculate_tree_hash()
         to compute it from raw file by::
 
@@ -614,14 +588,7 @@ def set_list_objects_encoding_type_url(params, context, **kwargs):
 
 
 def decode_list_object(parsed, context, **kwargs):
-    # This is needed because we are passing url as the encoding type. Since the
-    # paginator is based on the key, we need to handle it before it can be
-    # round tripped.
-    #
-    # From the documentation: If you specify encoding-type request parameter,
-    # Amazon S3 includes this element in the response, and returns encoded key
-    # name values in the following response elements:
-    # Delimiter, Marker, Prefix, NextMarker, Key.
+
     if parsed.get('EncodingType') == 'url' and \
                     context.get('EncodingTypeAutoSet'):
         # URL decode top-level keys in the response if present.

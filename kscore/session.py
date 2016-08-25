@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 Mitch Garnaat http://garnaat.org/
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -695,8 +695,8 @@ class Session(object):
 
     def create_client(self, service_name, region_name=None, api_version=None,
                       use_ssl=True, verify=None, endpoint_url=None,
-                      aws_access_key_id=None, aws_secret_access_key=None,
-                      aws_session_token=None, config=None):
+                      ks_access_key_id=None, ks_secret_access_key=None,
+                      ks_session_token=None, config=None):
         """Create a kscore client.
 
         :type service_name: string
@@ -738,20 +738,20 @@ class Session(object):
             override this behavior.  If this value is provided, then
             ``use_ssl`` is ignored.
 
-        :type aws_access_key_id: string
-        :param aws_access_key_id: The access key to use when creating
+        :type ks_access_key_id: string
+        :param ks_access_key_id: The access key to use when creating
             the client.  This is entirely optional, and if not provided,
             the credentials configured for the session will automatically
             be used.  You only need to provide this argument if you want
             to override the credentials used for this specific client.
 
-        :type aws_secret_access_key: string
-        :param aws_secret_access_key: The secret key to use when creating
-            the client.  Same semantics as aws_access_key_id above.
+        :type ks_secret_access_key: string
+        :param ks_secret_access_key: The secret key to use when creating
+            the client.  Same semantics as ks_access_key_id above.
 
-        :type aws_session_token: string
-        :param aws_session_token: The session token to use when creating
-            the client.  Same semantics as aws_access_key_id above.
+        :type ks_session_token: string
+        :param ks_session_token: The session token to use when creating
+            the client.  Same semantics as ks_access_key_id above.
 
         :type config: kscore.client.Config
         :param config: Advanced client configuration options. If a value
@@ -797,11 +797,11 @@ class Session(object):
         event_emitter = self.get_component('event_emitter')
         response_parser_factory = self.get_component(
             'response_parser_factory')
-        if aws_secret_access_key is not None:
+        if ks_secret_access_key is not None:
             credentials = kscore.credentials.Credentials(
-                access_key=aws_access_key_id,
-                secret_key=aws_secret_access_key,
-                token=aws_session_token)
+                access_key=ks_access_key_id,
+                secret_key=ks_secret_access_key,
+                token=ks_session_token)
         else:
             credentials = self.get_credentials()
         endpoint_resolver = self.get_component('endpoint_resolver')

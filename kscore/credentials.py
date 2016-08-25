@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 Mitch Garnaat http://garnaat.org/
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -583,12 +583,12 @@ class OriginalEC2Provider(CredentialProvider):
 class SharedCredentialProvider(CredentialProvider):
     METHOD = 'shared-credentials-file'
 
-    ACCESS_KEY = 'aws_access_key_id'
-    SECRET_KEY = 'aws_secret_access_key'
+    ACCESS_KEY = 'ks_access_key_id'
+    SECRET_KEY = 'ks_secret_access_key'
     # Same deal as the EnvProvider above.  KSCore originally supported
-    # aws_security_token, but the SDKs are standardizing on aws_session_token
+    # ks_security_token, but the SDKs are standardizing on ks_session_token
     # so we support both.
-    TOKENS = ['aws_security_token', 'aws_session_token']
+    TOKENS = ['ks_security_token', 'ks_session_token']
 
     def __init__(self, creds_filename, profile_name=None, ini_parser=None):
         self._creds_filename = creds_filename
@@ -625,12 +625,12 @@ class ConfigProvider(CredentialProvider):
     """INI based config provider with profile sections."""
     METHOD = 'config-file'
 
-    ACCESS_KEY = 'aws_access_key_id'
-    SECRET_KEY = 'aws_secret_access_key'
+    ACCESS_KEY = 'ks_access_key_id'
+    SECRET_KEY = 'ks_secret_access_key'
     # Same deal as the EnvProvider above.  KSCore originally supported
-    # aws_security_token, but the SDKs are standardizing on aws_session_token
+    # ks_security_token, but the SDKs are standardizing on ks_session_token
     # so we support both.
-    TOKENS = ['aws_security_token', 'aws_session_token']
+    TOKENS = ['ks_security_token', 'ks_session_token']
 
     def __init__(self, config_filename, profile_name, config_parser=None):
         """
@@ -680,8 +680,8 @@ class KSCoreProvider(CredentialProvider):
 
     KSC_CONFIG_ENV = 'KSC_CONFIG'
     DEFAULT_CONFIG_FILENAMES = ['/etc/kscore.cfg', './.kscore.cfg']
-    ACCESS_KEY = 'aws_access_key_id'
-    SECRET_KEY = 'aws_secret_access_key'
+    ACCESS_KEY = 'ks_access_key_id'
+    SECRET_KEY = 'ks_secret_access_key'
 
     def __init__(self, environ=None, ini_parser=None):
         if environ is None:
@@ -888,9 +888,9 @@ class AssumeRoleProvider(CredentialProvider):
     def _create_client_from_config(self, config):
         source_cred_values = config['source_cred_values']
         client = self._client_creator(
-            'sts', aws_access_key_id=source_cred_values['aws_access_key_id'],
-            aws_secret_access_key=source_cred_values['aws_secret_access_key'],
-            aws_session_token=source_cred_values.get('aws_session_token'),
+            'sts', ks_access_key_id=source_cred_values['ks_access_key_id'],
+            ks_secret_access_key=source_cred_values['ks_secret_access_key'],
+            ks_session_token=source_cred_values.get('ks_session_token'),
         )
         return client
 

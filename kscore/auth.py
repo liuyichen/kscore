@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 Mitch Garnaat http://garnaat.org/
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -448,9 +448,6 @@ class S3SigV4QueryAuth(SigV4QueryAuth):
     This signer will sign a request using query parameters and signature
     version 4, i.e a "presigned url" signer.
 
-    Based off of:
-
-    http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
 
     """
     def _normalize_url_path(self, path):
@@ -469,8 +466,6 @@ class S3SigV4PostAuth(SigV4Auth):
     """
     Presigns a s3 post
 
-    Implementation doc here:
-    http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-UsingHTTPPOST.html
     """
     def add_auth(self, request):
         datetime_now = datetime.datetime.utcnow()
@@ -652,9 +647,6 @@ class HmacV1QueryAuth(HmacV1Auth):
     """
     Generates a presigned request for s3.
 
-    Spec from this document:
-
-    http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
     #RESTAuthenticationQueryStringAuth
 
     """
@@ -701,10 +693,6 @@ class HmacV1QueryAuth(HmacV1Auth):
 class HmacV1PostAuth(HmacV1Auth):
     """
     Generates a presigned post for s3.
-
-    Spec from this document:
-
-    http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingHTTPPOST.html
     """
     def add_auth(self, request):
         fields = {}
