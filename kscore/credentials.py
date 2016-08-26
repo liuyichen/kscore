@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 Mitch Garnaat http://garnaat.org/
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -85,9 +85,9 @@ def create_credential_resolver(session):
         # concept to retrieve credentials.
         # The one edge case if is all three values are provided via
         # env vars:
-        # export AWS_ACCESS_KEY_ID=foo
-        # export AWS_SECRET_ACCESS_KEY=bar
-        # export AWS_PROFILE=baz
+        # export KS_ACCESS_KEY_ID=foo
+        # export KS_SECRET_ACCESS_KEY=bar
+        # export KS_PROFILE=baz
         # Then, just like our client() calls, the explicit credentials
         # will take precedence.
         #
@@ -486,11 +486,11 @@ class InstanceMetadataProvider(CredentialProvider):
 
 class EnvProvider(CredentialProvider):
     METHOD = 'env'
-    ACCESS_KEY = 'AWS_ACCESS_KEY_ID'
-    SECRET_KEY = 'AWS_SECRET_ACCESS_KEY'
+    ACCESS_KEY = 'KS_ACCESS_KEY_ID'
+    SECRET_KEY = 'KS_SECRET_ACCESS_KEY'
     # The token can come from either of these env var.
-    # AWS_SESSION_TOKEN is what other AWS SDKs have standardized on.
-    TOKENS = ['AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN']
+    # KS_SESSION_TOKEN is what other KS SDKs have standardized on.
+    TOKENS = ['KS_SECURITY_TOKEN', 'KS_SESSION_TOKEN']
 
     def __init__(self, environ=None, mapping=None):
         """
@@ -499,7 +499,7 @@ class EnvProvider(CredentialProvider):
             ``os.environ`` if no value is provided).
         :param mapping: An optional mapping of variable names to
             environment variable names.  Use this if you want to
-            change the mapping of access_key->AWS_ACCESS_KEY_ID, etc.
+            change the mapping of access_key->KS_ACCESS_KEY_ID, etc.
             The dict can have up to 3 keys: ``access_key``, ``secret_key``,
             ``session_token``.
         """
@@ -551,9 +551,9 @@ class EnvProvider(CredentialProvider):
 class OriginalEC2Provider(CredentialProvider):
     METHOD = 'ec2-credentials-file'
 
-    CRED_FILE_ENV = 'AWS_CREDENTIAL_FILE'
-    ACCESS_KEY = 'AWSAccessKeyId'
-    SECRET_KEY = 'AWSSecretKey'
+    CRED_FILE_ENV = 'KS_CREDENTIAL_FILE'
+    ACCESS_KEY = 'KSAccessKeyId'
+    SECRET_KEY = 'KSSecretKey'
 
     def __init__(self, environ=None, parser=None):
         if environ is None:
@@ -567,11 +567,11 @@ class OriginalEC2Provider(CredentialProvider):
         """
         Search for a credential file used by original EC2 CLI tools.
         """
-        if 'AWS_CREDENTIAL_FILE' in self._environ:
-            full_path = os.path.expanduser(self._environ['AWS_CREDENTIAL_FILE'])
+        if 'KS_CREDENTIAL_FILE' in self._environ:
+            full_path = os.path.expanduser(self._environ['KS_CREDENTIAL_FILE'])
             creds = self._parser(full_path)
             if self.ACCESS_KEY in creds:
-                logger.info('Found credentials in AWS_CREDENTIAL_FILE.')
+                logger.info('Found credentials in KS_CREDENTIAL_FILE.')
                 access_key = creds[self.ACCESS_KEY]
                 secret_key = creds[self.SECRET_KEY]
                 # EC2 creds file doesn't support session tokens.
@@ -583,12 +583,12 @@ class OriginalEC2Provider(CredentialProvider):
 class SharedCredentialProvider(CredentialProvider):
     METHOD = 'shared-credentials-file'
 
-    ACCESS_KEY = 'aws_access_key_id'
-    SECRET_KEY = 'aws_secret_access_key'
+    ACCESS_KEY = 'ks_access_key_id'
+    SECRET_KEY = 'ks_secret_access_key'
     # Same deal as the EnvProvider above.  KSCore originally supported
-    # aws_security_token, but the SDKs are standardizing on aws_session_token
+    # ks_security_token, but the SDKs are standardizing on ks_session_token
     # so we support both.
-    TOKENS = ['aws_security_token', 'aws_session_token']
+    TOKENS = ['ks_security_token', 'ks_session_token']
 
     def __init__(self, creds_filename, profile_name=None, ini_parser=None):
         self._creds_filename = creds_filename
@@ -625,12 +625,12 @@ class ConfigProvider(CredentialProvider):
     """INI based config provider with profile sections."""
     METHOD = 'config-file'
 
-    ACCESS_KEY = 'aws_access_key_id'
-    SECRET_KEY = 'aws_secret_access_key'
+    ACCESS_KEY = 'ks_access_key_id'
+    SECRET_KEY = 'ks_secret_access_key'
     # Same deal as the EnvProvider above.  KSCore originally supported
-    # aws_security_token, but the SDKs are standardizing on aws_session_token
+    # ks_security_token, but the SDKs are standardizing on ks_session_token
     # so we support both.
-    TOKENS = ['aws_security_token', 'aws_session_token']
+    TOKENS = ['ks_security_token', 'ks_session_token']
 
     def __init__(self, config_filename, profile_name, config_parser=None):
         """
@@ -679,9 +679,9 @@ class KSCoreProvider(CredentialProvider):
     METHOD = 'ksc-config'
 
     KSC_CONFIG_ENV = 'KSC_CONFIG'
-    DEFAULT_CONFIG_FILENAMES = ['/etc/kscore.cfg', './.kscore.cfg']
-    ACCESS_KEY = 'aws_access_key_id'
-    SECRET_KEY = 'aws_secret_access_key'
+    DEFAULT_CONFIG_FILENAMES = ['/etc/kscore.cfg', './.kscore.cfg', 'C:\\kscore.cfg']
+    ACCESS_KEY = 'ks_access_key_id'
+    SECRET_KEY = 'ks_secret_access_key'
 
     def __init__(self, environ=None, ini_parser=None):
         if environ is None:
@@ -888,9 +888,9 @@ class AssumeRoleProvider(CredentialProvider):
     def _create_client_from_config(self, config):
         source_cred_values = config['source_cred_values']
         client = self._client_creator(
-            'sts', aws_access_key_id=source_cred_values['aws_access_key_id'],
-            aws_secret_access_key=source_cred_values['aws_secret_access_key'],
-            aws_session_token=source_cred_values.get('aws_session_token'),
+            'sts', ks_access_key_id=source_cred_values['ks_access_key_id'],
+            ks_secret_access_key=source_cred_values['ks_secret_access_key'],
+            ks_session_token=source_cred_values.get('ks_session_token'),
         )
         return client
 
@@ -916,7 +916,7 @@ class AssumeRoleProvider(CredentialProvider):
         if config['role_session_name'] is not None:
             assume_role_kwargs['RoleSessionName'] = config['role_session_name']
         else:
-            role_session_name = 'AWS-CLI-session-%s' % (int(time.time()))
+            role_session_name = 'KS-CLI-session-%s' % (int(time.time()))
             assume_role_kwargs['RoleSessionName'] = role_session_name
         return assume_role_kwargs
 

@@ -1,10 +1,10 @@
-# Copyright 2012-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2012-2015 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -246,7 +246,7 @@ class Loader(object):
     BUILTIN_DATA_PATH = os.path.join(KSCORE_ROOT, 'data')
     # For convenience we automatically add ~/.aws/models to the data path.
     CUSTOMER_DATA_PATH = os.path.join(os.path.expanduser('~'),
-                                      '.aws', 'models')
+                                      '.ks', 'models')
 
     def __init__(self, extra_search_paths=None, file_loader=None,
                  cache=None, include_default_search_paths=True):

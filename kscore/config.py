@@ -1,10 +1,10 @@
-# Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2016 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -67,12 +67,8 @@ class Config(object):
             the virtual or the path style. Note that this is the default
             behavior if no style is specified.
 
-          * virtual -- Addressing style is always virtual. The name of the
-            bucket must be DNS compatible or an exception will be thrown.
-            Endpoints will be addressed as such: mybucket.s3.amazonaws.com
-
-          * path -- Addressing style is always by path. Endpoints will be
-            addressed as such: s3.amazonaws.com/mybucket
+          * virtual
+          * path
     """
     OPTION_DEFAULTS = OrderedDict([
         ('region_name', None),

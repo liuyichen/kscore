@@ -1,10 +1,11 @@
-# Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -34,7 +35,7 @@ def test_can_generate_all_inputs():
         for operation_name in service_model.operation_names:
             operation_model = service_model.operation_model(operation_name)
             input_shape = operation_model.input_shape
-            if input_shape is not None and input_shape.members:
+            if input_shape is not None and getattr(input_shape, "members", None):
                 yield (_test_can_generate_skeleton, generator,
                        input_shape, service_name, operation_name)
 

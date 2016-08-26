@@ -1,10 +1,10 @@
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -165,7 +165,7 @@ class AcceptorConfig(object):
 
     def _create_matcher_func(self):
         # An acceptor function is a callable that takes a single value.  The
-        # parsed AWS response.  Note that the parsed error response is also
+        # parsed KSYUN response.  Note that the parsed error response is also
         # provided in the case of errors, so it's entirely possible to
         # handle all the available matcher capabilities in the future.
         # There's only three supported matchers, so for now, this is all

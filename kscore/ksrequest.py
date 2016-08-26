@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 Mitch Garnaat http://garnaat.org/
-# Copyright 2012-2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright (c) 2012-2013 LiuYC https://github.com/liuyichen/
+# Copyright 2012-2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -37,7 +37,7 @@ from kscore.vendored.requests.packages.urllib3.connectionpool import \
 logger = logging.getLogger(__name__)
 
 
-class AWSHTTPResponse(HTTPResponse):
+class KSHTTPResponse(HTTPResponse):
     # The *args, **kwargs is used because the args are slightly
     # different in py2.6 than in py2.7/py3.
     def __init__(self, *args, **kwargs):
@@ -53,7 +53,7 @@ class AWSHTTPResponse(HTTPResponse):
             return HTTPResponse._read_status(self)
 
 
-class AWSHTTPConnection(HTTPConnection):
+class KSHTTPConnection(HTTPConnection):
     """HTTPConnection that supports Expect 100-continue.
 
     This is conceptually a subclass of httplib.HTTPConnection (though
@@ -62,7 +62,7 @@ class AWSHTTPConnection(HTTPConnection):
     100-continue, which we need for S3.  As far as I can tell, this is
     general purpose enough to not be specific to S3, but I'm being
     tentative and keeping it in kscore because I've only tested
-    this against AWS services.
+    this against KSYUN services.
 
     """
     def __init__(self, *args, **kwargs):
@@ -223,7 +223,7 @@ class AWSHTTPConnection(HTTPConnection):
                 status_tuple = (parts[0].decode('ascii'),
                                 int(parts[1]), parts[2].decode('ascii'))
                 response_class = functools.partial(
-                    AWSHTTPResponse, status_tuple=status_tuple)
+                    KSHTTPResponse, status_tuple=status_tuple)
                 self.response_class = response_class
                 self._response_received = True
         finally:
@@ -248,22 +248,22 @@ class AWSHTTPConnection(HTTPConnection):
             parts[1] == b'100')
 
 
-class AWSHTTPSConnection(VerifiedHTTPSConnection):
+class KSHTTPSConnection(VerifiedHTTPSConnection):
     pass
 
 
-# Now we need to set the methods we overrode from AWSHTTPConnection
-# onto AWSHTTPSConnection.  This is just a shortcut to avoid
-# copy/pasting the same code into AWSHTTPSConnection.
-for name, function in AWSHTTPConnection.__dict__.items():
+# Now we need to set the methods we overrode from KSHTTPConnection
+# onto KSHTTPSConnection.  This is just a shortcut to avoid
+# copy/pasting the same code into KSHTTPSConnection.
+for name, function in KSHTTPConnection.__dict__.items():
     if inspect.isfunction(function):
-        setattr(AWSHTTPSConnection, name, function)
+        setattr(KSHTTPSConnection, name, function)
 
 
 def prepare_request_dict(request_dict, endpoint_url, user_agent=None):
     """
     This method prepares a request dict to be created into an
-    AWSRequestObject. This prepares the request dict by adding the
+    KSRequestObject. This prepares the request dict by adding the
     url and the user agent to the request dict.
 
     :type request_dict: dict
@@ -293,19 +293,19 @@ def prepare_request_dict(request_dict, endpoint_url, user_agent=None):
 
 def create_request_object(request_dict):
     """
-    This method takes a request dict and creates an AWSRequest object
+    This method takes a request dict and creates an KSRequest object
     from it.
 
     :type request_dict: dict
     :param request_dict:  The request dict (created from the
         ``prepare_request_dict`` method).
 
-    :rtype: ``kscore.awsrequest.AWSRequest``
-    :return: An AWSRequest object based on the request_dict.
+    :rtype: ``kscore.ksrequest.KSRequest``
+    :return: An KSRequest object based on the request_dict.
 
     """
     r = request_dict
-    return AWSRequest(method=r['method'], url=r['url'],
+    return KSRequest(method=r['method'], url=r['url'],
                       data=r['body'],
                       headers=r['headers'])
 
@@ -332,7 +332,7 @@ def _urljoin(endpoint_url, url_path):
     return reconstructed
 
 
-class AWSRequest(models.RequestEncodingMixin, models.Request):
+class KSRequest(models.RequestEncodingMixin, models.Request):
     def __init__(self, *args, **kwargs):
         self.auth_path = None
         if 'auth_path' in kwargs:
@@ -354,9 +354,9 @@ class AWSRequest(models.RequestEncodingMixin, models.Request):
         self.context = {}
 
     def prepare(self):
-        """Constructs a :class:`AWSPreparedRequest <AWSPreparedRequest>`."""
+        """Constructs a :class:`KSPreparedRequest <KSPreparedRequest>`."""
         # Eventually I think it would be nice to add hooks into this process.
-        p = AWSPreparedRequest(self)
+        p = KSPreparedRequest(self)
         p.prepare_method(self.method)
         p.prepare_url(self.url, self.params)
         p.prepare_headers(self.headers)
@@ -375,7 +375,7 @@ class AWSRequest(models.RequestEncodingMixin, models.Request):
         return p.body
 
 
-class AWSPreparedRequest(models.PreparedRequest):
+class KSPreparedRequest(models.PreparedRequest):
     """Represents a prepared request.
 
     :ivar method: HTTP Method
@@ -393,7 +393,7 @@ class AWSPreparedRequest(models.PreparedRequest):
     """
     def __init__(self, original_request):
         self.original = original_request
-        super(AWSPreparedRequest, self).__init__()
+        super(KSPreparedRequest, self).__init__()
         self.hooks.setdefault('response', []).append(
             self.reset_stream_on_redirect)
 
@@ -424,7 +424,7 @@ class AWSPreparedRequest(models.PreparedRequest):
 
     def prepare_body(self, data, files, json=None):
         """Prepares the given HTTP body data."""
-        super(AWSPreparedRequest, self).prepare_body(data, files, json)
+        super(KSPreparedRequest, self).prepare_body(data, files, json)
 
         # Calculate the Content-Length by trying to seek the file as
         # requests cannot determine content length for some seekable file-like
@@ -440,9 +440,9 @@ class AWSPreparedRequest(models.PreparedRequest):
                 # Transfer-Encoding was added by requests because it did
                 # not add a Content-Length header. However, the
                 # Transfer-Encoding header is not supported for
-                # AWS Services so remove it if it is added.
+                # KSYUN Services so remove it if it is added.
                 if 'Transfer-Encoding' in self.headers:
                     self.headers.pop('Transfer-Encoding')
 
-HTTPSConnectionPool.ConnectionCls = AWSHTTPSConnection
-HTTPConnectionPool.ConnectionCls = AWSHTTPConnection
+HTTPSConnectionPool.ConnectionCls = KSHTTPSConnection
+HTTPConnectionPool.ConnectionCls = KSHTTPConnection

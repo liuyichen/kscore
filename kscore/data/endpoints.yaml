@@ -2,7 +2,7 @@
 version: 1
 partitions:
 # available zone
-- partition: ksc-cn
+- partition: ksyun-cn
   partitionName: KS China
   # iam.cn-beijing-6.[dnsSuffix]
   dnsSuffix: api.ksyun.com

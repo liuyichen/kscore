@@ -1,10 +1,10 @@
-# Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2014 ksyun.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You
 # may not use this file except in compliance with the License. A copy of
 # the License is located at
 #
-# http://aws.amazon.com/apache2.0/
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # or in the "license" file accompanying this file. This file is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
@@ -17,7 +17,7 @@ import kscore.serialize
 import kscore.validate
 from kscore import waiter, xform_name
 from kscore.auth import AUTH_TYPE_MAPS
-from kscore.awsrequest import prepare_request_dict
+from kscore.ksrequest import prepare_request_dict
 from kscore.config import Config
 from kscore.docs.docstring import ClientMethodDocstring
 from kscore.docs.docstring import PaginatorDocstring
@@ -268,17 +268,9 @@ class ClientCreator(object):
 
 
 class ClientEndpointBridge(object):
-    """Bridges endpoint data and client creation
+    """Bridges endpoint data and client creation"""
 
-    This class handles taking out the relevant arguments from the endpoint
-    resolver and determining which values to use, taking into account any
-    client configuration options and scope configuration options.
-
-    This class also handles determining what, if any, region to use if no
-    explicit region setting is provided. For example, Amazon S3 client will
-    utilize "us-east-1" by default if no region can be resolved."""
-
-    DEFAULT_ENDPOINT = '{service}.{region}.amazonaws.com'
+    DEFAULT_ENDPOINT = '{service}.{region}.api.ksyun.com'
 
     def __init__(self, endpoint_resolver, scoped_config=None,
                  client_config=None, default_endpoint=None,
@@ -479,11 +471,9 @@ class BaseClient(object):
         # Enable accelerate if the configuration is set to to true or the
         # endpoint being used matches one of the Accelerate endpoints.
         if s3_accelerate or S3_ACCELERATE_ENDPOINT in self._endpoint.host:
-            # Amazon S3 accelerate is being used then always use the virtual
-            # style of addressing because it is required.
+
             self._force_virtual_style_s3_addressing()
-            # Also make sure that the hostname gets switched to
-            # s3-accelerate.amazonaws.com
+
             self.meta.events.register_first(
                 'request-created.s3', switch_host_s3_accelerate)
         elif s3_addressing_style:
