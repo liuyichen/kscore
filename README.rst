@@ -40,6 +40,23 @@ Credentials 配置
 Service 使用
 ----------------
 
++ create_client 方法
+    service_name                服务，必须参数，例 iam
+    region_name=None            大区，必须参数，全局服务可以为None
+    api_version=None            API版本，默认使用最近版本
+    use_ssl=True                是否使用HTTPS，如接口支持情况下，优先使用
+    verify=None                 是否验证SSL证书
+    endpoint_url=None
+    ks_access_key_id=None
+    ks_secret_access_key=None
+    ks_session_token=None
+
+
++ 已支持大区 region_name 参考data/endpoints.yaml
+    cn-beijing-5
+    cn-beijing-6
+    cn-shanghai-2
+
 + IAM
 
 ::
