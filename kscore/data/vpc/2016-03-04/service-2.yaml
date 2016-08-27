@@ -2,11 +2,11 @@
 version: '2.0'
 metadata:
   apiVersion: '2016-03-04'
-  endpointPrefix: kec
+  endpointPrefix: vpc 
   jsonVersion: '1.1'
-  serviceFullName: KSC VM Service
+  serviceFullName: vpc Service
   signatureVersion: v4
-  targetPrefix: kec
+  targetPrefix: vpc 
   protocol: query-json
 
 operations:
@@ -17,10 +17,21 @@ operations:
     input:
       shape: Empty
 
-  DescribeInstances:
-    name: DescribeInstances
+  DescribeVpcs:
+    name: DescribeVpcs
     http:
       method: GET
+    input:
+      shape: Empty
+  DescribeNetworkInterfaces:
+    name: DescribeNetworkInterfaces
+    http:
+      method: GET
+  DescribeSubnetAvailableAddresses:
+    name: DescribeSubnetAvailableAddresses
+    http:
+      method: GET
+
 shapes:
   Id:
     type: string #list/map/structure

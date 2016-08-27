@@ -2,11 +2,11 @@
 version: '2.0'
 metadata:
   apiVersion: '2016-03-04'
-  endpointPrefix: kec
+  endpointPrefix: eip
   jsonVersion: '1.1'
-  serviceFullName: KSC VM Service
+  serviceFullName: eip Service
   signatureVersion: v4
-  targetPrefix: kec
+  targetPrefix: eip
   protocol: query-json
 
 operations:
@@ -17,10 +17,19 @@ operations:
     input:
       shape: Empty
 
-  DescribeInstances:
-    name: DescribeInstances
+  DescribeAddresses:
+    name: DescribeAddresses
     http:
       method: GET
+  AssociateAddress:
+    name: AssociateAddress
+    http:
+      method: GET
+  DisassociateAddress:
+    name: DisassociateAddress
+    http:
+      method: GET
+
 shapes:
   Id:
     type: string #list/map/structure
@@ -29,7 +38,7 @@ shapes:
     type: bool
 
   Int:
-    type: int
+    type: long
 
   DataTime:
     type: timestamp
@@ -54,3 +63,11 @@ shapes:
       id:
         shape: Id
     documentation: ""
+
+  DescribeAddresses:
+    type: structure
+    members:
+      NextToken:
+        shape: NonEmptyString
+      MaxResults:
+        shape: Int
