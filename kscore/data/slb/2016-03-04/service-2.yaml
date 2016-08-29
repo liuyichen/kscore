@@ -2,11 +2,11 @@
 version: '2.0'
 metadata:
   apiVersion: '2016-03-04'
-  endpointPrefix: kec
+  endpointPrefix: slb
   jsonVersion: '1.1'
-  serviceFullName: KSC VM Service
+  serviceFullName: slb Service
   signatureVersion: v4
-  targetPrefix: kec
+  targetPrefix: slb
   protocol: query-json
 
 operations:
@@ -17,10 +17,24 @@ operations:
     input:
       shape: Empty
 
-  DescribeInstances:
-    name: DescribeInstances
+  DescribeListeners:
+    name: DescribeListeners
     http:
       method: GET
+  RegisterInstancesWithListener:
+    name: RegisterInstancesWithListener
+    http:
+      method: GET
+  DescribeInstancesWithListener:
+    name: DescribeInstancesWithListener
+    http:
+      method: GET
+  DeregisterInstancesFromListener:
+    name: DeregisterInstancesFromListener
+    http:
+      method: GET
+
+
 shapes:
   Id:
     type: string #list/map/structure
