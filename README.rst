@@ -1,12 +1,12 @@
-kscore
+SDK 使用文档
 ========
 
-A low-level interface to a growing number of KSC Web Services. Reference from botocore.
+A low-level interface to a growing number of KSC Web Services.
 
 `Documentation <http://www.ksyun.com/doc/search?word=API>`__
 
 ----------------
-安装
+Install 安装
 ----------------
 
 + pip 安装
@@ -16,46 +16,102 @@ A low-level interface to a growing number of KSC Web Services. Reference from bo
     + python setup.py install
 
 ----------------
-Credentials 配置
+Config 配置
 ----------------
 
-+ 参考examples内示例
-
-    + 配置文件: ``.kscore.cfg``
++ 通过文件配置，参考examples内示例
 
     + 所在位置: '/etc/kscore.cfg' 或 './.kscore.cfg' 或 'C:\\kscore.cfg'
 
     + 注意: 使用相对路径时，需与运行目录保持一致。
 ::
 
-  [Credentials]
-  ks_access_key_id=AKLTyW1V6ZWET7aIvdCeIH1cwQ
-  ks_secret_access_key=OEoTK4IgEBIq3rlFsbpcNDs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ==
+    [Credentials]
+    ks_access_key_id=AKLTyW1V6ZWET7aIvdeeIH1cwQ
+    ks_secret_access_key=OEoTK4IgEBIq3rlFsbpcESs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ==
 
++ 或运行时配置，
 
-+ 或运行时配置
-    + session.set_credentials(access_key_id, secret_access_key, session_token=None)
+::
+
+    from kscore.session import get_session
+    ACCESS_KEY_ID = "AKLTyW1V6ZWET7aIvdeeIH1cwQ"
+    SECRET_ACCESS_KEY = "OEoTK4IgEBIq3rlFsbpcESs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ=="
+    s = get_session()
+    client = s.create_client("iam", ks_access_key_id=ACCESS_KEY_ID, ks_secret_access_key=SECRET_ACCESS_KEY)
 
 ----------------
-Service 使用
+Service 服务
 ----------------
 
-+ create_client 方法
-    | service_name                服务，必须参数，例 iam
-    | region_name=None            大区，必须参数，全局服务可以为None
-    | api_version=None            API版本，默认使用最近版本
-    | use_ssl=True                是否使用HTTPS，如接口支持情况下，优先使用
-    | verify=None                 是否验证SSL证书
-    | endpoint_url=None
-    | ks_access_key_id=None
-    | ks_secret_access_key=None
-    | ks_session_token=None
++ 已支持大区 region_name
+
+    +-------------------+------------+
+    | region_name       | 大区        |
+    +===================+============+
+    | cn-beijing-5      | 北京5区     |
+    +-------------------+------------+
+    | cn-beijing-6      | 北京6区     |
+    +-------------------+------------+
+    | cn-shanghai-2     | 上海2区     |
+    +-------------------+------------+
+
++ 服务列表 service_name， 详情参考API手册
+    +-------------------+------------+
+    | service_name      | 服务名      |
+    +===================+============+
+    | iam               |      |
+    +-------------------+------------+
+    | eip               |      |
+    +-------------------+------------+
+    | kec               |      |
+    +-------------------+------------+
+    | slb               |      |
+    +-------------------+------------+
+    | vpc               |      |
+    +-------------------+------------+
+    | monitor           |      |
+    +-------------------+------------+
+
+----------------
+Method 方法
+----------------
+
++ 常用方法
+    + get_session
+    +---------------------------+---------------------------------------+
+    | 参数                       | 说明                                   |
+    +===========================+=======================================+
+    | env_vars                  | 环境变量                                |
+    +---------------------------+---------------------------------------+
+
+    + create_client
+    +---------------------------+---------------------------------------+
+    | 参数                       | 说明                                   |
+    +===========================+=======================================+
+    | service_name              | 服务，必须参数，例：iam                   |
+    +---------------------------+---------------------------------------+
+    | region_name=None          | 大区，必须参数，全局服务可以为None          |
+    +---------------------------+---------------------------------------+
+    | api_version=None          | API 版本，默认使用最近版本                |
+    +---------------------------+---------------------------------------+
+    | use_ssl=True              | 是否使用HTTPS，如接口支持情况下，优先使用    |
+    +---------------------------+---------------------------------------+
+    | verify=None               | 是否验证SSL证书                         |
+    +---------------------------+---------------------------------------+
+    | endpoint_url=None         |                                       |
+    +---------------------------+---------------------------------------+
+    | ks_access_key_id=None     |                                       |
+    +---------------------------+---------------------------------------+
+    | ks_secret_access_key=None |                                       |
+    +---------------------------+---------------------------------------+
+    | ks_session_token=None     |                                       |
+    +---------------------------+---------------------------------------+
 
 
-+ 已支持大区 region_name 参考data/endpoints.yaml
-    | cn-beijing-5      北京5区
-    | cn-beijing-6      北京6区
-    | cn-shanghai-2     上海2区
+----------------
+Examples 示例
+----------------
 
 + IAM
 
@@ -100,51 +156,6 @@ Service 使用
 
 + 更多
 
-::
-
-    欢迎补充
-
-------------------
-Data 更多服务配置
-------------------
-+ 参考 https://github.com/liuyichen/kscore/issues
-+ ENDPOINT 配置
-    + data\\endpoints.yaml
-
-::
-
-    version: n
-    partitions:
-    - partition:
-      ...
-      # REGION 列表
-      regions:
-        ...
-    # 服务列表
-    - service:
-      ...
-
-+ SERVICE 配置
-    + data\\[service]\\[version]\\service-2.yaml
-
-::
-
-    version: n
-    # API 配置
-    metadata:
-      ...
-    # 操作方法
-    operations:
-      ...
-    # 请求及返回的结构体
-    shapes:
-      ...
-
-+ 请参考IAM,KEC等配置
-
-    配置文件变更后请重新安装 python setup.py install
-
-
 --------------------
 TESTS 测试
 --------------------
@@ -161,5 +172,4 @@ TESTS 测试
 Contact Information
 --------------------
 
-群   号: 367780788
-邮   箱: liuyc.mail@gmail.com
+服 务 群 号: 580681922
