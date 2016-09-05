@@ -3,7 +3,7 @@ SDK 使用文档
 
 A low-level interface to a growing number of KSC Web Services.
 
-`Documentation <http://www.ksyun.com/doc/search?word=API>`__
+
 
 ----------------
 Install 安装
@@ -11,15 +11,16 @@ Install 安装
 
 + pip 安装
     + pip install kscore
+
 + github 安装
-    + https://github.com/liuyichen/kscore 下载
-    + python setup.py install
+    + 通过 `GitHub<https://github.com/liuyichen/kscore>`__ 下载
+    + 进入`kscore`目录通过命令 python setup.py install 安装
 
 ----------------
 Config 配置
 ----------------
 
-+ 通过文件配置，参考examples内示例
++ 通过文件配置及管理密钥，参考examples内示例：
 
     + 所在位置: '/etc/kscore.cfg' 或 './.kscore.cfg' 或 'C:\\kscore.cfg'
 
@@ -30,13 +31,15 @@ Config 配置
     ks_access_key_id=AKLTyW1V6ZWET7aIvdeeIH1cwQ
     ks_secret_access_key=OEoTK4IgEBIq3rlFsbpcESs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ==
 
-+ 或运行时配置，
++ 或在程序运行时配置：
 
 ::
 
     from kscore.session import get_session
+    # 密钥
     ACCESS_KEY_ID = "AKLTyW1V6ZWET7aIvdeeIH1cwQ"
     SECRET_ACCESS_KEY = "OEoTK4IgEBIq3rlFsbpcESs87w513D6aOwdXxP6QHuvWlonSRYeKQyTzqc1XkUvpuQ=="
+
     s = get_session()
     client = s.create_client("iam", ks_access_key_id=ACCESS_KEY_ID, ks_secret_access_key=SECRET_ACCESS_KEY)
 
@@ -56,7 +59,8 @@ Service 服务
     | cn-shanghai-2     | 上海2区    |
     +-------------------+------------+
 
-+ 服务列表 service_name， 详情参考API手册
++ 服务列表 service_name， `详情参考API手册 <http://docs.ksyun.com>`__
+
     +-------------------+------------+
     | service_name      | 服务名     |
     +===================+============+
@@ -158,18 +162,6 @@ Examples 示例
         print json.dumps(m,sort_keys=True,indent=4)
 
 + 更多
-
---------------------
-TESTS 测试
---------------------
-
-+ 基本接口测试
-
-\tests\acceptance> behave
-
-+ 各服务测试用例
-
-\tests>nosetests --with-xunit --cover-erase --with-coverage --cover-package kscore --cover-xml -v integration
 
 --------------------
 Contact Information
