@@ -13,7 +13,7 @@ Install 安装
     + pip install kscore
 
 + github 安装
-    + 通过 `GitHub<https://github.com/liuyichen/kscore>`__ 下载
+    + 通过 `GitHub <https://github.com/liuyichen/kscore>`__ 下载
     + 进入`kscore`目录通过命令 python setup.py install 安装
 
 ----------------
